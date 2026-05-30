@@ -44,11 +44,29 @@ export default function ContactPage() {
     }
   };
 
+  const FORM_ENDPOINT = 'https://formsubmit.co/info@huaxingpcba.com';
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Placeholder — no backend integration
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 6000);
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+
+    fetch(FORM_ENDPOINT, {
+      method: 'POST',
+      body: formData,
+    })
+      .then((res) => {
+        if (res.ok || res.redirected) {
+          setSubmitted(true);
+          setFormData({ name: '', email: '', phone: '', company: '', message: '' });
+          setFiles([]);
+        } else {
+          alert('Submission failed. Please email us directly at info@huaxingpcba.com.');
+        }
+      })
+      .catch(() => {
+        alert('Network error. Please email us directly at info@huaxingpcba.com.');
+      });
   };
 
   return (
@@ -103,12 +121,12 @@ export default function ContactPage() {
                     Your inquiry has been received. Our engineering team will review your files and 
                     respond within 24 hours with a detailed quote and DFM feedback.
                   </p>
-                  <p className="mt-2 text-sm text-green-600">
-                    <strong>Note:</strong> This is a placeholder form. In production, submissions will be sent to our team.
-                  </p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="mt-10 space-y-6" action="#" method="POST">
+                <form onSubmit={handleSubmit} className="mt-10 space-y-6" encType="multipart/form-data">
+                  <input type="hidden" name="_subject" value="HUAXING PCBA - New Inquiry from Website" />
+                  <input type="hidden" name="_captcha" value="true" />
+                  <input type="hidden" name="_template" value="box" />
                   <div className="grid sm:grid-cols-2 gap-6">
                     <div>
                       <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-1.5">
@@ -251,7 +269,6 @@ export default function ContactPage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                     </svg>
                     Your information is kept confidential and will never be shared with third parties.
-                    <span className="block mt-1 text-gray-300">This form is a placeholder — no data is sent to any server.</span>
                   </p>
                 </form>
               )}

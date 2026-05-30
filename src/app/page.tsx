@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import InquiryModal from '@/components/InquiryModal';
 
 const stats = [
   { value: '25+', label: 'Years Experience' },
@@ -143,6 +144,7 @@ const faqItems = [
 
 export default function HomePage() {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
+  const [showInquiry, setShowInquiry] = useState(false);
 
   return (
     <>
@@ -170,12 +172,12 @@ export default function HomePage() {
               5 DIP lines, and direct pricing — no middlemen. From prototype to volume production.
             </p>
             <div className="flex flex-wrap justify-center gap-4 mt-10">
-              <Link href="/contact" className="btn-primary text-base py-3.5 px-8">
+              <button onClick={() => setShowInquiry(true)} className="btn-primary text-base py-3.5 px-8 cursor-pointer">
                 Get a Free Quote
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
-              </Link>
+              </button>
               <Link href="/products/pcb-manufacturing" className="btn-secondary text-base py-3.5 px-8">
                 View Capabilities
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -235,9 +237,9 @@ export default function HomePage() {
             <p className="text-amber-900 font-medium">
               <span className="font-bold">Special Offer:</span> PCB Assembly from just <span className="font-bold text-amber-700">$25</span> for 1-20 PCS — full turnkey, zero MOQ, free DFM review.
             </p>
-            <Link href="/contact" className="text-sm font-semibold text-amber-700 hover:text-amber-800 underline underline-offset-4 flex-shrink-0">
+            <button onClick={() => setShowInquiry(true)} className="text-sm font-semibold text-amber-700 hover:text-amber-800 underline underline-offset-4 flex-shrink-0 cursor-pointer">
               Claim Now &rarr;
-            </Link>
+            </button>
           </div>
         </div>
       </section>
@@ -356,15 +358,15 @@ export default function HomePage() {
             Our engineering team provides DFM feedback on every project.
           </p>
           <div className="flex flex-wrap justify-center gap-4 mt-10">
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 bg-white text-brand-700 hover:bg-brand-50 font-semibold py-3.5 px-8 rounded-lg transition-all duration-200 shadow-lg shadow-brand-900/20"
+            <button
+              onClick={() => setShowInquiry(true)}
+              className="inline-flex items-center gap-2 bg-white text-brand-700 hover:bg-brand-50 font-semibold py-3.5 px-8 rounded-lg transition-all duration-200 shadow-lg shadow-brand-900/20 cursor-pointer"
             >
               Request Free Quote
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
               </svg>
-            </Link>
+            </button>
             <Link
               href="/products/pcb-assembly"
               className="inline-flex items-center gap-2 border-2 border-white/40 text-white hover:bg-white/10 font-semibold py-3.5 px-8 rounded-lg transition-all duration-200"
@@ -446,6 +448,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <InquiryModal isOpen={showInquiry} onClose={() => setShowInquiry(false)} />
     </>
   );
 }

@@ -1,10 +1,11 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 const footerLinks = {
   Services: [
     { href: '/products/pcb-manufacturing', label: 'PCB Manufacturing' },
     { href: '/products/pcb-assembly', label: 'PCB Assembly' },
-    { href: '/products/bom', label: 'BOM Procurement' },
+    { href: '/capabilities', label: 'BOM Procurement' },
     { href: '/capabilities', label: 'Capabilities' },
   ],
   Company: [
@@ -25,13 +26,7 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-lg bg-brand-600 flex items-center justify-center">
-                <span className="text-white font-bold text-lg">H</span>
-              </div>
-              <div>
-                <span className="text-lg font-bold text-white font-heading">HUAXING</span>
-                <span className="text-lg font-bold text-brand-400 font-heading"> PCBA</span>
-              </div>
+              <Image src="/images/logo.webp" alt="HUAXING PCBA" width={140} height={40} className="h-10 w-auto" />
             </div>
             <p className="text-sm text-gray-400 leading-relaxed">
               Your trusted PCB & PCBA manufacturing partner in Shenzhen, China. 
@@ -59,6 +54,12 @@ export default function Footer() {
           ))}
         </div>
         <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <Link href="/contact" className="inline-flex items-center gap-2 bg-brand-600 hover:bg-brand-500 text-white text-sm font-semibold py-2 px-5 rounded-lg transition-all duration-200 shadow-lg shadow-brand-900/20">
+            Get a Free Quote
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </Link>
           <p className="text-sm text-gray-500">© 2026 HUAXING PCBA. All rights reserved.</p>
           <p className="text-sm text-gray-500">Shenzhen, China | PCB & PCBA Manufacturing</p>
         </div>
