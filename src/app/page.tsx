@@ -546,12 +546,15 @@ export default function HomePage() {
             <p className="text-gray-600">
               Still have questions? We&apos;re here to help.
             </p>
-            <Link href="/contact" className="mt-3 inline-flex items-center gap-2 text-brand-600 font-semibold hover:text-brand-700 transition-colors">
+            <button
+              onClick={() => setShowInquiry(true)}
+              className="mt-3 inline-flex items-center gap-2 text-brand-600 font-semibold hover:text-brand-700 transition-colors cursor-pointer"
+            >
               Contact Our Team
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
-            </Link>
+            </button>
           </div>
         </div>
       </section>

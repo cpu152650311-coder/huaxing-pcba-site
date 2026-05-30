@@ -118,10 +118,106 @@ const posts: Record<string, BlogPost> = {
       '3. Is flexibility required? (Rigid-flex = polyimide)',
       '4. What\'s your budget? (FR4 for cost-sensitive)',
       '5. What layer count? (FR4 handles 2–58 layers)',
-      'Need help choosing? HUAXING offers engineering consultation on material selection for every project — free of charge.',
+      '6. Need help choosing? HUAXING offers engineering consultation on material selection for every project — free of charge.',
     ],
   },
 };
+
+// ── Table rows → proper HTML table ──
+function renderTable(rows: string[]) {
+  const headerRow = rows.find(r => !r.includes('---'));
+  const allRows = rows.filter(r => !r.includes('---'));
+  if (allRows.length === 0) return null;
+
+  const parseRow = (row: string) => row.split('|').filter(c => c.trim()).map(c => c.trim());
+  const isHeader = rows.some(r => r.includes('---'));
+
+  const tableRows = allRows.map((r, i) => ({
+    cells: parseRow(r),
+    isHead: i === 0 && isHeader,
+  }));
+
+  return (
+    <div className="overflow-x-auto my-8 border border-gray-200 rounded-xl">
+      <table className="w-full text-sm">
+        {tableRows.length > 0 && (
+          <thead>
+            <tr className="bg-brand-50 border-b border-gray-200">
+              {tableRows[0].cells.filter(c => c).map((cell, j) => (
+                <th key={j} className="px-4 py-3 text-left font-semibold text-gray-900 text-xs uppercase tracking-wider whitespace-nowrap">
+                  {cell}
+                </th>
+              ))}
+            </tr>
+          </thead>
+        )}
+        <tbody>
+          {tableRows.slice(tableRows.some(r => r.isHead) ? 1 : 0).map((row, i) => (
+            <tr key={i} className="border-b border-gray-100 last:border-0 hover:bg-gray-50/50">
+              {row.cells.filter(c => c).map((cell, j) => (
+                <td key={j} className={`px-4 py-3 text-gray-600 ${j === 0 ? 'font-medium text-gray-900 whitespace-nowrap' : ''}`}>
+                  {cell}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+// ── Paragraph renderer (single line, not table) ──
+function renderParagraph(text: string, key: number) {
+  // Bold inline
+  const bolded = text.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-gray-900">$1</strong>');
+
+  if (text.startsWith('## ')) {
+    return <h2 key={key} className="text-2xl font-bold text-gray-900 font-heading mt-12 mb-4">{text.replace('## ', '')}</h2>;
+  }
+  if (text.startsWith('### ')) {
+    return <h3 key={key} className="text-xl font-bold text-gray-900 font-heading mt-8 mb-3">{text.replace('### ', '')}</h3>;
+  }
+  if (text.startsWith('- **')) {
+    return <li key={key} className="text-gray-600 ml-5 mt-1.5" dangerouslySetInnerHTML={{ __html: text.replace(/^- \*\*(.*?)\*\*\s*:\s*/, '<strong>$1</strong>: ') }} />;
+  }
+  if (text.startsWith('- ')) {
+    return <li key={key} className="text-gray-600 ml-5 mt-1.5">{text.replace('- ', '')}</li>;
+  }
+  if (/^\d+\.\s/.test(text)) {
+    return <li key={key} className="text-gray-600 ml-5 mt-1.5" dangerouslySetInnerHTML={{ __html: text.replace(/^\d+\.\s*/, '').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />;
+  }
+  if (text === '') {
+    return <div key={key} className="h-2" />;
+  }
+  return <p key={key} className="text-gray-600 mt-4 leading-relaxed" dangerouslySetInnerHTML={{ __html: bolded }} />;
+}
+
+// ── Content block parser (groups table rows together) ──
+function renderContent(content: string[]) {
+  const elements: React.ReactNode[] = [];
+  let tableRows: string[] | null = null;
+
+  function flushTable() {
+    if (tableRows) {
+      elements.push(<div key={`t${elements.length}`}>{renderTable(tableRows)}</div>);
+      tableRows = null;
+    }
+  }
+
+  content.forEach((line, i) => {
+    if (line.startsWith('|')) {
+      if (!tableRows) tableRows = [];
+      tableRows.push(line);
+    } else {
+      flushTable();
+      elements.push(renderParagraph(line, i));
+    }
+  });
+  flushTable(); // flush last table if any
+
+  return elements;
+}
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -159,39 +255,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       {/* Content */}
       <section className="bg-white py-16 md:py-24">
         <article className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 prose prose-gray prose-lg">
-          {post.content.map((paragraph, i) => {
-            if (paragraph.startsWith('## ')) {
-              return <h2 key={i} className="text-2xl font-bold text-gray-900 font-heading mt-12 mb-4">{paragraph.replace('## ', '')}</h2>;
-            }
-            if (paragraph.startsWith('| ')) {
-              if (paragraph.startsWith('| ---')) return null;
-              const cells = paragraph.split('|').filter(Boolean).map(c => c.trim());
-              if (paragraph.includes('|---')) return null;
-              return (
-                <p key={i} className="font-mono text-sm text-gray-600 border-l-2 border-brand-200 pl-4 my-2">
-                  {cells.join('  │  ')}
-                </p>
-              );
-            }
-            if (paragraph.startsWith('- **')) {
-              return <li key={i} className="text-gray-600 ml-4" dangerouslySetInnerHTML={{ __html: paragraph.replace(/^- \*\*(.*?)\*\*:\s*/, '<strong>$1</strong>: ') }} />;
-            }
-            if (paragraph.startsWith('- ')) {
-              return <li key={i} className="text-gray-600 ml-4">{paragraph.replace('- ', '')}</li>;
-            }
-            if (paragraph.startsWith('### ')) {
-              return <h3 key={i} className="text-xl font-bold text-gray-900 font-heading mt-8 mb-3">{paragraph.replace('### ', '')}</h3>;
-            }
-            if (paragraph === '') {
-              return <div key={i} className="h-2" />;
-            }
-            // Handle numbered items like "1. **text**: desc"
-            if (/^\d+\./.test(paragraph)) {
-              const content = paragraph.replace(/^\d+\.\s*/, '');
-              return <li key={i} className="text-gray-600 ml-4" dangerouslySetInnerHTML={{ __html: content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />;
-            }
-            return <p key={i} className="text-gray-600 mt-4 leading-relaxed">{paragraph}</p>;
-          })}
+          {renderContent(post.content)}
         </article>
       </section>
 
