@@ -1,5 +1,9 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
+import { useState } from 'react';
+import InquiryModal from '@/components/InquiryModal';
 
 interface BlogPost {
   slug: string;
@@ -10,43 +14,39 @@ interface BlogPost {
   image?: string;
 }
 
-async function getPosts(): Promise<BlogPost[]> {
-  // In production, this would read from a data file or CMS
-  // For now, return seed posts
-  return [
-    {
-      slug: 'pcb-vs-pcba-whats-the-difference',
-      title: 'PCB vs PCBA: What\'s the Difference and Why It Matters',
-      excerpt: 'Understanding the distinction between bare PCB fabrication and full PCB assembly is crucial for electronics manufacturing. Learn the key differences, processes, and when to choose each.',
-      date: '2026-05-28',
-      category: 'PCB Basics',
-    },
-    {
-      slug: 'smt-assembly-guide-2026',
-      title: 'Complete Guide to SMT Assembly: Process, Equipment, and Best Practices',
-      excerpt: 'Surface Mount Technology (SMT) is the backbone of modern electronics manufacturing. This comprehensive guide covers the entire SMT assembly process, from solder paste printing to reflow soldering.',
-      date: '2026-05-25',
-      category: 'Assembly',
-    },
-    {
-      slug: 'pcb-material-selection-guide',
-      title: 'PCB Material Selection Guide: FR4, High-Frequency, and Advanced Substrates',
-      excerpt: 'Choosing the right PCB substrate material is critical for performance and reliability. Compare FR4, Rogers, Teflon, and other materials across thermal, electrical, and cost dimensions.',
-      date: '2026-05-20',
-      category: 'PCB Design',
-    },
-    {
-      slug: 'dfm-checklist-pcb-assembly',
-      title: 'The Ultimate DFM Checklist for PCB Assembly Success',
-      excerpt: 'Design for Manufacturing (DFM) review catches issues before production. This checklist covers pad design, solder mask, component spacing, panelization, and test point requirements.',
-      date: '2026-05-15',
-      category: 'Design Tips',
-    },
-  ];
-}
+const posts: BlogPost[] = [
+  {
+    slug: 'pcb-vs-pcba-whats-the-difference',
+    title: 'PCB vs PCBA: What\'s the Difference and Why It Matters',
+    excerpt: 'Understanding the distinction between bare PCB fabrication and full PCB assembly is crucial for electronics manufacturing. Learn the key differences, processes, and when to choose each.',
+    date: '2026-05-28',
+    category: 'PCB Basics',
+  },
+  {
+    slug: 'smt-assembly-guide-2026',
+    title: 'Complete Guide to SMT Assembly: Process, Equipment, and Best Practices',
+    excerpt: 'Surface Mount Technology (SMT) is the backbone of modern electronics manufacturing. This comprehensive guide covers the entire SMT assembly process, from solder paste printing to reflow soldering.',
+    date: '2026-05-25',
+    category: 'Assembly',
+  },
+  {
+    slug: 'pcb-material-selection-guide',
+    title: 'PCB Material Selection Guide: FR4, High-Frequency, and Advanced Substrates',
+    excerpt: 'Choosing the right PCB substrate material is critical for performance and reliability. Compare FR4, Rogers, Teflon, and other materials across thermal, electrical, and cost dimensions.',
+    date: '2026-05-20',
+    category: 'PCB Design',
+  },
+  {
+    slug: 'dfm-checklist-pcb-assembly',
+    title: 'The Ultimate DFM Checklist for PCB Assembly Success',
+    excerpt: 'Design for Manufacturing (DFM) review catches issues before production. This checklist covers pad design, solder mask, component spacing, panelization, and test point requirements.',
+    date: '2026-05-15',
+    category: 'Design Tips',
+  },
+];
 
-export default async function BlogPage() {
-  const posts = await getPosts();
+export default function BlogPage() {
+  const [showInquiry, setShowInquiry] = useState(false);
 
   return (
     <>
@@ -127,6 +127,50 @@ export default async function BlogPage() {
           )}
         </div>
       </section>
+
+      {/* CTA — Get a Free Quote */}
+      <section className="relative bg-gradient-to-br from-brand-600 to-brand-800 overflow-hidden">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-white font-heading">
+            Ready to Start Your Project?
+          </h2>
+          <p className="mt-4 text-lg text-brand-100 max-w-2xl mx-auto">
+            From prototype to high-volume production, get factory-direct pricing and 
+            expert engineering support for your PCB assembly needs.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4 mt-10">
+            <button
+              onClick={() => setShowInquiry(true)}
+              className="inline-flex items-center gap-2 bg-white text-brand-700 hover:bg-brand-50 font-semibold py-3.5 px-8 rounded-lg transition-all duration-200 shadow-lg shadow-brand-900/20 cursor-pointer"
+            >
+              Get a Free Quote
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </button>
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 border-2 border-white/40 text-white hover:bg-white/10 font-semibold py-3.5 px-8 rounded-lg transition-all duration-200"
+            >
+              Contact Us
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+          </div>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-brand-200">
+            <span>Zero MOQ</span>
+            <span className="hidden sm:inline">&middot;</span>
+            <span>Free DFM Review</span>
+            <span className="hidden sm:inline">&middot;</span>
+            <span>ISO9001 &amp; UL Certified</span>
+            <span className="hidden sm:inline">&middot;</span>
+            <span>24h Response Time</span>
+          </div>
+        </div>
+      </section>
+
+      <InquiryModal isOpen={showInquiry} onClose={() => setShowInquiry(false)} />
     </>
   );
 }

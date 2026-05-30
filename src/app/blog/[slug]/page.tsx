@@ -1,5 +1,9 @@
+'use client';
+
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import React, { useState } from 'react';
+import InquiryModal from '@/components/InquiryModal';
 
 interface BlogPost {
   slug: string;
@@ -219,9 +223,10 @@ function renderContent(content: string[]) {
   return elements;
 }
 
-export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
-  const post = posts[slug];
+export default function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const [showInquiry, setShowInquiry] = useState(false);
+  const postSlug = React.use(params).slug; // Unwrap the promise
+  const post = posts[postSlug];
   if (!post) {
     notFound();
   }
@@ -268,14 +273,16 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           <p className="mt-3 text-brand-100">
             Get a free quote and DFM review within 24 hours.
           </p>
-          <Link href="/contact" className="mt-6 inline-flex items-center gap-2 bg-white text-brand-700 hover:bg-brand-50 font-semibold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg shadow-brand-900/20">
+          <button onClick={() => setShowInquiry(true)} className="mt-6 inline-flex items-center gap-2 bg-white text-brand-700 hover:bg-brand-50 font-semibold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg shadow-brand-900/20 cursor-pointer">
             Contact Us
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
-          </Link>
+          </button>
         </div>
       </section>
+
+      <InquiryModal isOpen={showInquiry} onClose={() => setShowInquiry(false)} />
     </>
   );
 }

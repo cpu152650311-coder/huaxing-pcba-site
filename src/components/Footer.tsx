@@ -1,5 +1,9 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
+import InquiryModal from '@/components/InquiryModal';
 
 const footerLinks = {
   Services: [
@@ -16,6 +20,8 @@ const footerLinks = {
 };
 
 export default function Footer() {
+  const [showInquiry, setShowInquiry] = useState(false);
+
   return (
     <footer className="bg-gray-900 text-gray-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -28,7 +34,13 @@ export default function Footer() {
               Your trusted PCB & PCBA manufacturing partner in Shenzhen, China. 
               25+ years of excellence, zero middlemen.
             </p>
-            <div className="flex gap-3 mt-6">
+            <button
+              onClick={() => setShowInquiry(true)}
+              className="mt-6 inline-block bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-6 py-3 rounded-lg transition-colors"
+            >
+              Get Quote
+            </button>
+            <div className="flex gap-3 mt-4">
               <span className="inline-flex items-center gap-1 text-xs text-gray-500">ISO9001</span>
               <span className="inline-flex items-center gap-1 text-xs text-gray-500">UL</span>
               <span className="inline-flex items-center gap-1 text-xs text-gray-500">RoHS</span>
@@ -64,6 +76,7 @@ export default function Footer() {
           <p className="text-sm text-gray-500">Shenzhen, China | PCB & PCBA Manufacturing</p>
         </div>
       </div>
+      <InquiryModal isOpen={showInquiry} onClose={() => setShowInquiry(false)} />
     </footer>
   );
 }
