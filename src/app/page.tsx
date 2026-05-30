@@ -38,7 +38,7 @@ const services = [
   {
     title: 'BOM Procurement',
     description: 'Full turnkey procurement from 5,000+ verified suppliers. Component sourcing, obsolescence management, and kitting — zero MOQ.',
-    href: '/products/bom',
+    href: '/capabilities',
     icon: (
       <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
@@ -88,15 +88,13 @@ const whyChooseUs = [
 ];
 
 const products = [
-  { src: '/images/app-medical.webp', caption: 'Medical' },
+  { src: '/images/app-medical.webp', caption: 'Medical Devices' },
   { src: '/images/app-robot.webp', caption: 'Robotics' },
-  { src: '/images/product-smarthome-dimmer.webp', caption: 'Smart Home Dimmer' },
-  { src: '/images/product-dimming.webp', caption: 'Dimming' },
-  { src: '/images/product-set-top-box.webp', caption: 'Set-Top Box' },
-  { src: '/images/app-knx.webp', caption: 'KNX' },
-  { src: '/images/app-consumer.webp', caption: 'Consumer Electronics' },
-  { src: '/images/app-smarthome.webp', caption: 'Smart Home' },
-  { src: '/images/app-industrial.webp', caption: 'Industrial' },
+  { src: '/images/product-smarthome-dimmer.webp', caption: 'Smart Home' },
+  { src: '/images/product-set-top-box.webp', caption: 'Consumer Electronics' },
+  { src: '/images/app-knx.webp', caption: 'Building Automation' },
+  { src: '/images/app-consumer.webp', caption: 'Wearables & IoT' },
+  { src: '/images/app-industrial.webp', caption: 'Industrial Control' },
   { src: '/images/app-automotive.webp', caption: 'Automotive' },
 ];
 
@@ -326,6 +324,15 @@ export default function HomePage() {
               </div>
             ))}
           </div>
+
+          <div className="mt-10 text-center">
+            <Link href="/quality" className="btn-secondary text-base py-3 px-8">
+              Explore Our Quality Standards
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -363,6 +370,19 @@ export default function HomePage() {
                 </div>
               </button>
             ))}
+          </div>
+
+          {/* Browse all → */}
+          <div className="mt-10 text-center">
+            <Link
+              href="/products/pcb-assembly"
+              className="btn-secondary text-base py-3 px-8"
+            >
+              View All PCBA Applications
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </Link>
           </div>
         </div>
       </section>
@@ -421,6 +441,15 @@ export default function HomePage() {
             <p className="text-sm text-gray-400">
               ...and 150,000+ more companies trust HUAXING PCBA for their manufacturing needs
             </p>
+          </div>
+
+          <div className="mt-8 text-center">
+            <Link href="/about" className="inline-flex items-center gap-1.5 text-sm font-medium text-brand-600 hover:text-brand-700 transition-colors">
+              Learn More About HUAXING
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
           </div>
         </div>
       </section>
