@@ -2,12 +2,11 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import InquiryModal from '@/components/InquiryModal';
 
 const companyInfo = {
   address: 'Building A, Huaxing Industrial Park, Fuyong Street, Bao\'an District, Shenzhen, Guangdong 518103, China',
   email: 'info@huaxingpcba.com',
-  phone: '+86-755-2733-6688',
-  phone2: '+86-755-2733-6699',
 };
 
 const businessHours = [
@@ -33,6 +32,7 @@ export default function ContactPage() {
   });
   const [files, setFiles] = useState<File[]>([]);
   const [submitted, setSubmitted] = useState(false);
+  const [showInquiry, setShowInquiry] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -410,24 +410,15 @@ export default function ContactPage() {
             you&apos;ll get a detailed quote within 24 hours — guaranteed.
           </p>
           <div className="flex flex-wrap justify-center gap-4 mt-10">
-            <a
-              href={`mailto:${companyInfo.email}`}
-              className="inline-flex items-center gap-2 bg-white text-brand-700 hover:bg-brand-50 font-semibold py-3.5 px-8 rounded-lg transition-all duration-200 shadow-lg shadow-brand-900/20"
+            <button
+              onClick={() => setShowInquiry(true)}
+              className="btn-primary text-base py-3.5 px-8"
             >
+              Get a Free Quote
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
-              Email Us Directly
-            </a>
-            <a
-              href={`tel:${companyInfo.phone.replace(/\D/g, '')}`}
-              className="inline-flex items-center gap-2 border-2 border-white/40 text-white hover:bg-white/10 font-semibold py-3.5 px-8 rounded-lg transition-all duration-200"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
-              </svg>
-              Call Us Now
-            </a>
+            </button>
           </div>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-brand-200">
             <span>Zero MOQ</span>
@@ -464,6 +455,7 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+      <InquiryModal isOpen={showInquiry} onClose={() => setShowInquiry(false)} />
     </>
   );
 }

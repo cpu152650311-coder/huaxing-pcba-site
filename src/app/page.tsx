@@ -87,6 +87,19 @@ const whyChooseUs = [
   },
 ];
 
+const products = [
+  { src: '/images/app-medical.webp', caption: 'Medical' },
+  { src: '/images/app-robot.webp', caption: 'Robotics' },
+  { src: '/images/product-smarthome-dimmer.webp', caption: 'Smart Home Dimmer' },
+  { src: '/images/product-dimming.webp', caption: 'Dimming' },
+  { src: '/images/product-set-top-box.webp', caption: 'Set-Top Box' },
+  { src: '/images/app-knx.webp', caption: 'KNX' },
+  { src: '/images/app-consumer.webp', caption: 'Consumer Electronics' },
+  { src: '/images/app-smarthome.webp', caption: 'Smart Home' },
+  { src: '/images/app-industrial.webp', caption: 'Industrial' },
+  { src: '/images/app-automotive.webp', caption: 'Automotive' },
+];
+
 const partnerBrands = [
   'Tyco', 'Tesla', 'Microchip', 'Avnet', 'Isola',
   'Intel', 'AMD', 'NXP', 'Texas Instruments', 'STMicroelectronics',
@@ -145,6 +158,7 @@ const faqItems = [
 export default function HomePage() {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
   const [showInquiry, setShowInquiry] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   return (
     <>
@@ -314,6 +328,75 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* PCBA Products Gallery */}
+      <section className="bg-white py-20 md:py-28">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h2 className="section-title">PCBA Applications Across Industries</h2>
+            <p className="section-subtitle mx-auto">
+              From medical devices and robotics to smart home systems and automotive — our PCBA 
+              solutions power products across 150,000+ customer applications worldwide.
+            </p>
+          </div>
+
+          <div className="mt-14 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            {products.map((product) => (
+              <button
+                key={product.caption}
+                onClick={() => setSelectedImage(product.src)}
+                className="group relative overflow-hidden rounded-xl bg-white border border-gray-100 shadow-sm hover:shadow-lg hover:border-brand-200 transition-all duration-300 cursor-pointer text-left"
+              >
+                <div className="aspect-[4/3] relative overflow-hidden">
+                  <Image
+                    src={product.src}
+                    alt={product.caption}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                  />
+                </div>
+                <div className="p-3 text-center">
+                  <span className="text-sm font-medium text-gray-700 group-hover:text-brand-600 transition-colors">
+                    {product.caption}
+                  </span>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Lightbox Modal */}
+      {selectedImage && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+          onClick={() => setSelectedImage(null)}
+        >
+          <button
+            onClick={() => setSelectedImage(null)}
+            className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-colors cursor-pointer"
+            aria-label="Close lightbox"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+          <div
+            className="relative max-w-4xl max-h-[90vh] w-full h-full flex items-center justify-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Image
+              src={selectedImage}
+              alt="Product"
+              fill
+              className="object-contain"
+              sizes="(max-width: 1024px) 100vw, 80vw"
+              priority
+            />
+          </div>
+        </div>
+      )}
 
       {/* Partner Brands */}
       <section className="bg-gray-50 py-16 md:py-20">

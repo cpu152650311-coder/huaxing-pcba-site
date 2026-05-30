@@ -27,15 +27,17 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="px-3 py-2 text-sm text-gray-600 hover:text-brand-600 rounded-lg hover:bg-brand-50 transition-colors"
+                className={`px-3 py-2 text-sm text-gray-600 hover:text-brand-600 rounded-lg hover:bg-brand-50 transition-colors${link.label === 'PCB Manufacturing' ? ' whitespace-nowrap' : ''}`}
               >
                 {link.label}
               </Link>
             ))}
-            <Link href="/contact" className="ml-3 btn-primary text-sm py-2 px-5">
+          </nav>
+          <div className="hidden lg:flex items-center ml-auto">
+            <Link href="/contact" className="btn-primary text-sm py-2 px-5">
               Get Quote
             </Link>
-          </nav>
+          </div>
           <button className="lg:hidden p-2" onClick={() => setOpen(!open)}>
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               {open ? (
