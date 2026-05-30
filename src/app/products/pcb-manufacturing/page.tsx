@@ -225,6 +225,40 @@ export default function PCBMfgPage() {
         </div>
       </section>
 
+      {/* ─── Consumer Electronics Showcase ─── */}
+      <section className="bg-white py-16 md:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="rounded-2xl overflow-hidden shadow-sm border border-gray-100">
+              <Image
+                src="/images/old-industry-consumer.webp"
+                alt="Consumer electronics PCBA showcase - set-top box"
+                width={1024}
+                height={640}
+                className="w-full h-auto object-cover"
+              />
+            </div>
+            <div>
+              <h2 className="section-title">Consumer Electronics Manufacturing</h2>
+              <p className="section-subtitle">
+                From set-top boxes to smart home devices, HUAXING delivers high-volume PCB manufacturing
+                for consumer electronics at competitive prices without compromising quality.
+              </p>
+              <div className="mt-6 grid grid-cols-2 gap-4">
+                <div className="bg-gray-50 rounded-xl border border-gray-100 p-4 text-center">
+                  <div className="text-2xl font-bold text-brand-600">15M+</div>
+                  <div className="text-xs text-gray-500">Daily Component Placement</div>
+                </div>
+                <div className="bg-gray-50 rounded-xl border border-gray-100 p-4 text-center">
+                  <div className="text-2xl font-bold text-brand-600">300K+</div>
+                  <div className="text-xs text-gray-500">Boards per Month</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ─── Material Options ─── */}
       <section className="bg-gray-50 py-20 md:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

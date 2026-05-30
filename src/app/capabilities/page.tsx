@@ -144,7 +144,7 @@ const certifications = [
 
 const industries = [
   { title: 'Automotive', image: '/images/app-automotive.webp', alt: 'Automotive electronics motor driver PCBA', desc: 'IATF 16949 certified. Engine control units, ADAS, infotainment, power modules with PPAP and IMDS documentation.' },
-  { title: 'Medical', image: '/images/app-consumer.webp', alt: 'Medical equipment control PCBA', desc: 'ISO 13485 qualified processes. Medical device electronics, diagnostic equipment, and patient monitoring systems.' },
+  { title: 'Medical', image: '/images/app-medical.webp', alt: 'Medical equipment control PCBA', desc: 'ISO 13485 qualified processes. Medical device electronics, diagnostic equipment, and patient monitoring systems.' },
   { title: 'Industrial', image: '/images/app-industrial.webp', alt: 'Industrial automation motion control PCBA', desc: 'Motion control, PLCs, motor drives, and power distribution boards built for harsh environments.' },
   { title: 'IoT & Connectivity', image: '/images/app-iot.webp', alt: 'IoT device PCBA electronics', desc: 'Wireless modules, sensor nodes, gateways, and connectivity solutions for smart infrastructure.' },
   { title: 'Smart Home', image: '/images/app-smarthome.webp', alt: 'Smart home electronics dimming module PCBA', desc: 'KNX, Zigbee, and WiFi-enabled devices — from dimming modules to smart thermostats.' },
@@ -205,7 +205,10 @@ export default function CapabilitiesPage() {
       </section>
 
       {/* ─── Overview ─── */}
-      <section className="bg-white py-20 md:py-28" id="overview">
+      <section className="relative overflow-hidden bg-white py-20 md:py-28" id="overview">
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[300px] opacity-5 pointer-events-none hidden lg:block">
+          <Image src="/images/product-dimming.webp" alt="" width={1024} height={640} className="w-full h-auto" />
+        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="section-title">End-to-End PCBA Solutions</h2>
@@ -271,7 +274,10 @@ export default function CapabilitiesPage() {
       </section>
 
       {/* ─── Equipment List ─── */}
-      <section className="bg-white py-20 md:py-28">
+      <section className="relative overflow-hidden bg-white py-20 md:py-28">
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[300px] opacity-5 pointer-events-none hidden lg:block">
+          <Image src="/images/product-knx.webp" alt="" width={1024} height={640} className="w-full h-auto" />
+        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="section-title">Equipment &amp; Machinery</h2>

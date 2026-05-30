@@ -265,8 +265,25 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* ─── Industry Highlight Banner — Medical ─── */}
+      <section className="relative bg-gray-900 py-16 overflow-hidden">
+        <div className="absolute inset-0">
+          <Image src="/images/old-industry-medical.webp" alt="" width={1024} height={640} className="w-full h-full object-cover opacity-25" />
+          <div className="absolute inset-0 bg-gradient-to-r from-gray-900/90 to-gray-900/70" />
+        </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h3 className="text-2xl font-bold text-white font-heading">Medical-Grade PCBA Manufacturing</h3>
+          <p className="mt-3 text-gray-300 max-w-2xl mx-auto">
+            ISO 13485 qualified processes for medical device electronics — from diagnostic equipment to patient monitoring systems.
+          </p>
+        </div>
+      </section>
+
       {/* ─── Timeline ─── */}
-      <section className="bg-gray-50 py-20 md:py-28" id="timeline">
+      <section className="bg-gray-50 py-20 md:py-28 overflow-hidden relative" id="timeline">
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[350px] opacity-5 pointer-events-none hidden lg:block">
+          <Image src="/images/old-industry-industrial.webp" alt="" width={1024} height={640} className="w-full h-auto" />
+        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="section-title">Our Journey</h2>
@@ -325,7 +342,10 @@ export default function AboutPage() {
       </section>
 
       {/* ─── Mission & Values ─── */}
-      <section className="bg-white py-20 md:py-28" id="values">
+      <section className="bg-white py-20 md:py-28 overflow-hidden relative" id="values">
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[350px] opacity-5 pointer-events-none hidden lg:block">
+          <Image src="/images/old-industry-consumer.webp" alt="" width={1024} height={640} className="w-full h-auto" />
+        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="section-title">Our Mission &amp; Values</h2>
@@ -444,7 +464,10 @@ export default function AboutPage() {
       </section>
 
       {/* ─── Global Presence ─── */}
-      <section className="bg-white py-20 md:py-28" id="global">
+      <section className="bg-white py-20 md:py-28 overflow-hidden relative" id="global">
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[350px] opacity-5 pointer-events-none hidden lg:block">
+          <Image src="/images/old-industry-auto.webp" alt="" width={1024} height={640} className="w-full h-auto" />
+        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="section-title">Global Presence</h2>
@@ -499,7 +522,10 @@ export default function AboutPage() {
       </section>
 
       {/* ─── Industry Applications ─── */}
-      <section className="bg-gray-50 py-20 md:py-28">
+      <section className="bg-gray-50 py-20 md:py-28 overflow-hidden relative">
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[300px] opacity-5 pointer-events-none hidden lg:block">
+          <Image src="/images/product-set-top-box.webp" alt="" width={1024} height={640} className="w-full h-auto" />
+        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="section-title">Industries We Serve</h2>

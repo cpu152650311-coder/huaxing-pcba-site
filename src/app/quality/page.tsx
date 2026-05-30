@@ -246,7 +246,10 @@ export default function QualityPage() {
       </section>
 
       {/* ─── Inspection Process Flow ─── */}
-      <section className="bg-white py-20 md:py-28" id="inspection-process">
+      <section className="bg-white py-20 md:py-28 overflow-hidden relative" id="inspection-process">
+        <div className="absolute left-0 top-0 w-1/4 h-full opacity-5 pointer-events-none hidden lg:block">
+          <Image src="/images/hero-hero.webp" alt="" width={550} height={869} className="w-full h-full object-cover" />
+        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="section-title">Inspection Process Flow</h2>

@@ -281,7 +281,10 @@ export default function PCBAssemblyPage() {
       </section>
 
       {/* ─── Assembly Process Flow ─── */}
-      <section className="bg-gray-50 py-20 md:py-28">
+      <section className="relative overflow-hidden bg-gray-50 py-20 md:py-28">
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[300px] opacity-5 pointer-events-none hidden lg:block">
+          <Image src="/images/product-dimming.webp" alt="" width={1024} height={640} className="w-full h-auto" />
+        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="section-title">Assembly Process Flow</h2>
@@ -311,7 +314,10 @@ export default function PCBAssemblyPage() {
       </section>
 
       {/* ─── Special Capabilities ─── */}
-      <section className="bg-white py-20 md:py-28">
+      <section className="relative overflow-hidden bg-white py-20 md:py-28">
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[300px] opacity-5 pointer-events-none hidden lg:block">
+          <Image src="/images/product-set-top-box.webp" alt="" width={1024} height={640} className="w-full h-auto" />
+        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="section-title">Special &amp; Value-Added Services</h2>

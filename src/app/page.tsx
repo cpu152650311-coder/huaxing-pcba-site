@@ -149,10 +149,13 @@ export default function HomePage() {
   return (
     <>
       {/* ─── Hero ─── */}
-      <section className="relative overflow-hidden bg-gray-900">
+      <section className="relative overflow-hidden bg-gray-900 min-h-[85vh] flex items-center">
         <div className="absolute inset-0">
-          <Image src="/images/hero-factory.webp" alt="" width={550} height={869} className="w-full h-full object-cover opacity-40" />
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-900/90 via-gray-900/70 to-gray-900/80" />
+          <Image src="/images/old-hero-factory.webp" alt="" width={516} height={600} className="w-full h-full object-cover opacity-30" />
+          <div className="absolute inset-0 bg-gradient-to-r from-gray-900/95 via-gray-900/80 to-gray-900/70" />
+        </div>
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[400px] opacity-15 pointer-events-none hidden lg:block">
+          <Image src="/images/factory-banner2.webp" alt="" width={550} height={869} className="w-full h-auto" />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
           <div className="max-w-3xl mx-auto text-center">
@@ -246,7 +249,7 @@ export default function HomePage() {
       {/* ─── Services Overview ─── */}
       <section className="relative bg-gray-50 py-20 md:py-28 overflow-hidden">
         <div className="absolute right-0 top-0 w-1/3 h-full opacity-5 pointer-events-none">
-          <Image src="/images/factory-smt.webp" alt="" width={516} height={600} className="w-full h-full object-cover" />
+          <Image src="/images/old-factory.webp" alt="" width={550} height={869} className="w-full h-full object-cover" />
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
@@ -288,7 +291,7 @@ export default function HomePage() {
       {/* ─── Why Choose Us ─── */}
       <section className="relative bg-white py-20 md:py-28 overflow-hidden">
         <div className="absolute left-0 top-0 w-1/4 h-full opacity-5 pointer-events-none">
-          <Image src="/images/hero-hero.webp" alt="" width={550} height={869} className="w-full h-full object-cover" />
+          <Image src="/images/worker-smt.webp" alt="" width={516} height={600} className="w-full h-full object-cover" />
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
@@ -355,7 +358,7 @@ export default function HomePage() {
       {/* ─── CTA ─── */}
       <section className="relative bg-gray-900 py-20 overflow-hidden">
         <div className="absolute inset-0">
-          <Image src="/images/hero-pcba-fallback.webp" alt="" width={1920} height={1080} className="w-full h-full object-cover opacity-20" />
+          <Image src="/images/factory-banner3.webp" alt="" width={550} height={869} className="w-full h-full object-cover opacity-20" />
           <div className="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-900/90 to-gray-900" />
         </div>
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
