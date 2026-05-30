@@ -149,7 +149,7 @@ export default function HomePage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gray-900 min-h-[85vh] flex items-center">
+      <section className="relative overflow-hidden bg-gradient-to-br from-brand-50 via-white to-white min-h-[85vh] flex items-center">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
           <div className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-brand-100 text-brand-700 rounded-full text-sm font-medium mb-6">
@@ -343,19 +343,19 @@ export default function HomePage() {
       </section>
 
       {/* CTA */}
-      <section className="relative bg-gray-900 py-20 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-brand-50 via-white to-white py-20 overflow-hidden">
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white font-heading">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 font-heading">
             Ready to Start Your Project?
           </h2>
-          <p className="mt-4 text-lg text-gray-300 max-w-2xl mx-auto">
+          <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
             Upload your Gerber files and BOM for a free, no-obligation quote within 24 hours. 
             Our engineering team provides DFM feedback on every project.
           </p>
           <div className="flex flex-wrap justify-center gap-4 mt-10">
             <button
               onClick={() => setShowInquiry(true)}
-              className="inline-flex items-center gap-2 bg-white text-gray-900 hover:bg-gray-100 font-semibold py-3.5 px-8 rounded-lg transition-all duration-200 shadow-lg shadow-black/20 cursor-pointer"
+              className="inline-flex items-center gap-2 bg-brand-600 text-white hover:bg-brand-700 font-semibold py-3.5 px-8 rounded-lg transition-all duration-200 shadow-lg shadow-brand-900/20 cursor-pointer"
             >
               Request Free Quote
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -364,7 +364,7 @@ export default function HomePage() {
             </button>
             <Link
               href="/products/pcb-assembly"
-              className="inline-flex items-center gap-2 border-2 border-gray-500 text-gray-300 hover:text-white hover:border-gray-300 font-semibold py-3.5 px-8 rounded-lg transition-all duration-200"
+              className="inline-flex items-center gap-2 border-2 border-gray-200 text-gray-500 hover:text-gray-700 hover:border-gray-300 font-semibold py-3.5 px-8 rounded-lg transition-all duration-200"
             >
               See Assembly Pricing
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

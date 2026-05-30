@@ -160,24 +160,20 @@ export default function CapabilitiesPage() {
   return (
     <>
       {/* ─── Hero ─── */}
-      <section className="relative bg-gray-900 overflow-hidden">
-        <div className="absolute inset-0">
-          <Image src="/images/app-industrial.webp" alt="" width={1024} height={640} className="w-full h-full object-cover opacity-25" />
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-900/90 to-gray-900/70" />
-        </div>
+      <section className="relative bg-gradient-to-br from-brand-50 via-white to-white overflow-hidden">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/20 text-white rounded-full text-sm font-medium mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-brand-100 text-brand-700 rounded-full text-sm font-medium mb-6">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" />
               </svg>
               <span>Our Capabilities</span>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white font-heading leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 font-heading leading-tight">
               Comprehensive PCBA<br />
               <span className="text-brand-600">Manufacturing Capabilities</span>
             </h1>
-            <p className="mt-6 text-lg md:text-xl text-gray-200 leading-relaxed max-w-2xl">
+            <p className="mt-6 text-lg md:text-xl text-gray-600 leading-relaxed max-w-2xl">
               With 25+ years of PCB manufacturing and assembly expertise, HUAXING operates 9 SMT lines, 
               4 DIP lines, and a full suite of inspection, testing, and value-added services under one roof. 
               From rapid prototypes to high-volume production — all backed by ISO, UL, and IATF 16949 certifications.
@@ -198,9 +194,9 @@ export default function CapabilitiesPage() {
           {/* Stats bar */}
           <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4">
             {heroStats.map((stat) => (
-              <div key={stat.label} className="bg-white/10 backdrop-blur rounded-xl border border-white/10 shadow-sm p-5 text-center">
-                <div className="text-2xl md:text-3xl font-bold text-white font-heading">{stat.value}</div>
-                <div className="text-sm text-gray-300 mt-1">{stat.label}</div>
+              <div key={stat.label} className="bg-gray-50 rounded-xl border border-gray-100 shadow-sm p-5 text-center">
+                <div className="text-2xl md:text-3xl font-bold text-brand-600 font-heading">{stat.value}</div>
+                <div className="text-sm text-gray-500 mt-1">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -209,9 +205,6 @@ export default function CapabilitiesPage() {
 
       {/* ─── Overview ─── */}
       <section className="relative overflow-hidden bg-white py-20 md:py-28" id="overview">
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[300px] opacity-5 pointer-events-none hidden lg:block">
-          <Image src="/images/product-dimming.webp" alt="" width={1024} height={640} className="w-full h-auto" />
-        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="section-title">End-to-End PCBA Solutions</h2>
@@ -278,9 +271,6 @@ export default function CapabilitiesPage() {
 
       {/* ─── Equipment List ─── */}
       <section className="relative overflow-hidden bg-white py-20 md:py-28">
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[300px] opacity-5 pointer-events-none hidden lg:block">
-          <Image src="/images/product-knx.webp" alt="" width={1024} height={640} className="w-full h-auto" />
-        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="section-title">Equipment &amp; Machinery</h2>
@@ -413,9 +403,6 @@ export default function CapabilitiesPage() {
 
       {/* ─── QC/QA Processes ─── */}
       <section className="relative overflow-hidden bg-white py-20 md:py-28">
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[300px] opacity-5 pointer-events-none hidden lg:block">
-          <Image src="/images/app-iot.webp" alt="" width={1024} height={640} className="w-full h-auto" />
-        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="section-title">Quality Control &amp; Assurance</h2>

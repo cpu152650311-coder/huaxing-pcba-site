@@ -18,11 +18,11 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-20">
-          <Link href="/" className="flex items-center gap-2">
+        <div className="relative flex items-center justify-between h-16 lg:h-20">
+          <Link href="/" className="flex items-center gap-2 flex-shrink-0">
             <Image src="/images/logo.webp" alt="HUAXING PCBA" width={140} height={40} className="h-8 w-auto" />
           </Link>
-          <nav className="hidden lg:flex items-center gap-1">
+          <nav className="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
             {navLinks.map((link) => (
               <Link
                 key={link.href}

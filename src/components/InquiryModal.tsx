@@ -125,7 +125,7 @@ export default function InquiryModal({ isOpen, onClose }: { isOpen: boolean; onC
 
       {/* Modal panel */}
       <div
-        className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto"
+        className="relative bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[95vh] overflow-y-visible"
         style={{ animation: 'if-scale-in 0.35s cubic-bezier(0.16, 1, 0.3, 1)' }}
       >
         {/* Close button */}

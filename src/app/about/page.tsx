@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { useState } from 'react';
 import InquiryModal from '@/components/InquiryModal';
 
@@ -143,24 +142,20 @@ export default function AboutPage() {
   return (
     <>
       {/* ─── Hero ─── */}
-      <section className="relative bg-gray-900 overflow-hidden">
-        <div className="absolute inset-0">
-          <Image src="/images/hero-pcba-concept.webp" alt="" width={1792} height={1024} className="w-full h-full object-cover opacity-30" />
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-900/90 to-gray-900/70" />
-        </div>
+      <section className="relative bg-gradient-to-br from-brand-50 via-white to-white overflow-hidden">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/10 text-brand-300 rounded-full text-sm font-medium mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-brand-100 text-brand-700 rounded-full text-sm font-medium mb-6">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               <span>About HUAXING</span>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white font-heading leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 font-heading leading-tight">
               25+ Years of<br />
-              <span className="text-brand-300">PCB &amp; PCBA Excellence</span>
+              <span className="text-brand-600">PCB &amp; PCBA Excellence</span>
             </h1>
-            <p className="mt-6 text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl">
+            <p className="mt-6 text-lg md:text-xl text-gray-600 leading-relaxed max-w-2xl">
               From our roots as a small component distributor in Shenzhen to a global OEM manufacturer 
               serving 150,000+ customers across 60+ countries — HUAXING has been delivering quality 
               PCB and PCBA solutions since 1998.
@@ -181,9 +176,9 @@ export default function AboutPage() {
           {/* Global stats bar */}
           <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4">
             {globalStats.map((stat) => (
-              <div key={stat.label} className="bg-white/10 backdrop-blur rounded-xl border border-white/10 shadow-sm p-5 text-center">
-                <div className="text-2xl md:text-3xl font-bold text-brand-300 font-heading">{stat.value}</div>
-                <div className="text-sm text-gray-300 mt-1">{stat.label}</div>
+              <div key={stat.label} className="bg-gray-50 rounded-xl border border-gray-100 shadow-sm p-5 text-center">
+                <div className="text-2xl md:text-3xl font-bold text-brand-600 font-heading">{stat.value}</div>
+                <div className="text-sm text-gray-500 mt-1">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -234,15 +229,6 @@ export default function AboutPage() {
               </div>
             </div>
             <div className="space-y-6">
-              <div className="rounded-2xl overflow-hidden shadow-sm border border-gray-100">
-                <Image
-                  src="/images/team-factory.webp"
-                  alt="HUAXING factory team - skilled workers in cleanroom environment"
-                  width={1024}
-                  height={931}
-                  className="w-full h-auto object-cover"
-                />
-              </div>
               <div className="bg-gray-50 rounded-2xl border border-gray-100 shadow-sm p-8">
                 <h3 className="text-xl font-bold text-gray-900 font-heading mb-6">At a Glance</h3>
                 <div className="grid grid-cols-2 gap-5">
@@ -268,25 +254,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ─── Industry Highlight Banner — Medical ─── */}
-      <section className="relative bg-gray-900 py-16 overflow-hidden">
-        <div className="absolute inset-0">
-          <Image src="/images/old-industry-medical.webp" alt="" width={1024} height={640} className="w-full h-full object-cover opacity-25" />
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-900/90 to-gray-900/70" />
-        </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h3 className="text-2xl font-bold text-white font-heading">Medical-Grade PCBA Manufacturing</h3>
-          <p className="mt-3 text-gray-300 max-w-2xl mx-auto">
-            ISO 13485 qualified processes for medical device electronics — from diagnostic equipment to patient monitoring systems.
-          </p>
-        </div>
-      </section>
-
       {/* ─── Timeline ─── */}
       <section className="bg-gray-50 py-20 md:py-28 overflow-hidden relative" id="timeline">
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[350px] opacity-5 pointer-events-none hidden lg:block">
-          <Image src="/images/old-industry-industrial.webp" alt="" width={1024} height={640} className="w-full h-auto" />
-        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="section-title">Our Journey</h2>
@@ -346,9 +315,6 @@ export default function AboutPage() {
 
       {/* ─── Mission & Values ─── */}
       <section className="bg-white py-20 md:py-28 overflow-hidden relative" id="values">
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[350px] opacity-5 pointer-events-none hidden lg:block">
-          <Image src="/images/old-industry-consumer.webp" alt="" width={1024} height={640} className="w-full h-auto" />
-        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="section-title">Our Mission &amp; Values</h2>
@@ -444,15 +410,6 @@ export default function AboutPage() {
             </div>
 
             <div className="space-y-4">
-              <div className="rounded-2xl overflow-hidden shadow-sm border border-gray-100">
-                <Image
-                  src="/images/factory-smt.webp"
-                  alt="HUAXING engineer holding PCBA board at SMT production line"
-                  width={516}
-                  height={600}
-                  className="w-full h-auto object-cover"
-                />
-              </div>
               <div className="grid grid-cols-3 gap-3">
                 {factoryStats.slice(0, 6).map((stat) => (
                   <div key={stat.label} className="bg-white rounded-xl border border-gray-100 shadow-sm p-3 text-center hover:shadow-md hover:border-brand-100 transition-all duration-200">
@@ -468,9 +425,6 @@ export default function AboutPage() {
 
       {/* ─── Global Presence ─── */}
       <section className="bg-white py-20 md:py-28 overflow-hidden relative" id="global">
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[350px] opacity-5 pointer-events-none hidden lg:block">
-          <Image src="/images/old-industry-auto.webp" alt="" width={1024} height={640} className="w-full h-auto" />
-        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="section-title">Global Presence</h2>
@@ -526,9 +480,6 @@ export default function AboutPage() {
 
       {/* ─── Industry Applications ─── */}
       <section className="bg-gray-50 py-20 md:py-28 overflow-hidden relative">
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[300px] opacity-5 pointer-events-none hidden lg:block">
-          <Image src="/images/product-set-top-box.webp" alt="" width={1024} height={640} className="w-full h-auto" />
-        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="section-title">Industries We Serve</h2>

@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import InquiryModal from '@/components/InquiryModal';
@@ -153,9 +152,6 @@ export default function QualityPage() {
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-brand-100/40 blur-3xl" />
           <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-brand-100/30 blur-3xl" />
-        </div>
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[400px] h-[600px] opacity-10 pointer-events-none hidden lg:block">
-          <Image src="/images/factory-quality.webp" alt="" width={550} height={869} className="w-full h-full object-contain" />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
           <div className="max-w-3xl">
@@ -376,18 +372,6 @@ export default function QualityPage() {
             </div>
 
             <div className="space-y-6">
-              <div className="rounded-2xl overflow-hidden shadow-sm border border-gray-100">
-                <Image
-                  src="/images/team-factory.webp"
-                  alt="HUAXING quality control team at work"
-                  width={1024}
-                  height={931}
-                  className="w-full h-auto object-cover"
-                />
-                <div className="p-3 bg-white text-center text-xs text-gray-500 border-t border-gray-100">
-                  Quality control team ensuring every board meets strict standards
-                </div>
-              </div>
               <div className="bg-gray-50 rounded-2xl border border-gray-100 shadow-sm p-8">
                 <h3 className="text-xl font-bold text-gray-900 font-heading">Quality by the Numbers</h3>
                 <div className="mt-6 space-y-6">
