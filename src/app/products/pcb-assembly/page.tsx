@@ -2,6 +2,8 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { useState } from 'react';
+import InquiryModal from '@/components/InquiryModal';
 
 const smtStats = [
   { label: 'SMT Lines', value: '9' },
@@ -134,6 +136,7 @@ const specialCapabilities = [
 ];
 
 export default function PCBAssemblyPage() {
+  const [showInquiry, setShowInquiry] = useState(false);
   return (
     <>
       {/* ─── Hero ─── */}
@@ -160,12 +163,12 @@ export default function PCBAssemblyPage() {
               to complex BGA assemblies — all inspected by AOI, X-ray, and flying probe systems.
             </p>
             <div className="flex flex-wrap gap-4 mt-8">
-              <Link href="/contact" className="btn-primary">
+              <button onClick={() => setShowInquiry(true)} className="btn-primary cursor-pointer">
                 Request PCB Assembly Quote
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
-              </Link>
+              </button>
               <Link href="/capabilities" className="btn-secondary">
                 View All Capabilities
               </Link>
@@ -398,15 +401,15 @@ export default function PCBAssemblyPage() {
             project before production to ensure manufacturability and optimal pricing.
           </p>
           <div className="flex flex-wrap justify-center gap-4 mt-10">
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 bg-white text-brand-700 hover:bg-brand-50 font-semibold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg shadow-brand-900/20"
+            <button
+              onClick={() => setShowInquiry(true)}
+              className="inline-flex items-center gap-2 bg-white text-brand-700 hover:bg-brand-50 font-semibold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg shadow-brand-900/20 cursor-pointer"
             >
               Upload Files & Get Quote
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
               </svg>
-            </Link>
+            </button>
             <Link
               href="/products/pcb-manufacturing"
               className="inline-flex items-center gap-2 border-2 border-white/40 text-white hover:bg-white/10 font-semibold py-3 px-8 rounded-lg transition-all duration-200"
@@ -422,6 +425,8 @@ export default function PCBAssemblyPage() {
           </p>
         </div>
       </section>
+
+      <InquiryModal isOpen={showInquiry} onClose={() => setShowInquiry(false)} />
     </>
   );
 }

@@ -2,6 +2,8 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
+import InquiryModal from '@/components/InquiryModal';
 
 const heroStats = [
   { label: 'Years Experience', value: '25+' },
@@ -154,6 +156,7 @@ const industries = [
 ];
 
 export default function CapabilitiesPage() {
+  const [showInquiry, setShowInquiry] = useState(false);
   return (
     <>
       {/* ─── Hero ─── */}
@@ -180,12 +183,12 @@ export default function CapabilitiesPage() {
               From rapid prototypes to high-volume production — all backed by ISO, UL, and IATF 16949 certifications.
             </p>
             <div className="flex flex-wrap gap-4 mt-8">
-              <Link href="/contact" className="btn-primary">
+              <button onClick={() => setShowInquiry(true)} className="btn-primary cursor-pointer">
                 Discuss Your Project
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
-              </Link>
+              </button>
               <a href="#technical-capabilities" className="btn-secondary">
                 Explore Capabilities
               </a>
@@ -537,15 +540,15 @@ export default function CapabilitiesPage() {
           </div>
 
           <div className="mt-10 text-center">
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 text-brand-600 hover:text-brand-700 font-semibold transition-colors"
+            <button
+              onClick={() => setShowInquiry(true)}
+              className="inline-flex items-center gap-2 text-brand-600 hover:text-brand-700 font-semibold transition-colors cursor-pointer"
             >
               Request certification documentation
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
-            </Link>
+            </button>
           </div>
         </div>
       </section>
@@ -561,15 +564,15 @@ export default function CapabilitiesPage() {
             provide DFM feedback, and deliver a competitive quote within 24 hours.
           </p>
           <div className="flex flex-wrap justify-center gap-4 mt-10">
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 bg-white text-brand-700 hover:bg-brand-50 font-semibold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg shadow-brand-900/20"
+            <button
+              onClick={() => setShowInquiry(true)}
+              className="inline-flex items-center gap-2 bg-white text-brand-700 hover:bg-brand-50 font-semibold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg shadow-brand-900/20 cursor-pointer"
             >
               Submit Your Inquiry
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
               </svg>
-            </Link>
+            </button>
             <a
               href="#technical-capabilities"
               className="inline-flex items-center gap-2 border-2 border-white/40 text-white hover:bg-white/10 font-semibold py-3 px-8 rounded-lg transition-all duration-200"
@@ -585,6 +588,8 @@ export default function CapabilitiesPage() {
           </p>
         </div>
       </section>
+
+      <InquiryModal isOpen={showInquiry} onClose={() => setShowInquiry(false)} />
     </>
   );
 }

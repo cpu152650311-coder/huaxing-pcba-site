@@ -2,6 +2,8 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { useState } from 'react';
+import InquiryModal from '@/components/InquiryModal';
 
 const keySpecs = [
   { label: 'Max Layers', value: '58', description: 'Multilayer stackup for complex designs' },
@@ -149,6 +151,7 @@ const qualityTests = [
 ];
 
 export default function PCBMfgPage() {
+  const [showInquiry, setShowInquiry] = useState(false);
   return (
     <>
       {/* ─── Hero ─── */}
@@ -175,12 +178,12 @@ export default function PCBMfgPage() {
               line/space, and full HDI capability, we produce boards for the most demanding applications.
             </p>
             <div className="flex flex-wrap gap-4 mt-8">
-              <Link href="/contact" className="btn-primary">
+              <button onClick={() => setShowInquiry(true)} className="btn-primary cursor-pointer">
                 Request PCB Quote
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
-              </Link>
+              </button>
               <Link href="/capabilities" className="btn-secondary">
                 View All Capabilities
               </Link>
@@ -291,41 +294,30 @@ export default function PCBMfgPage() {
       {/* ─── Manufacturing Excellence ─── */}
       <section className="bg-gray-50 py-20 md:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="rounded-2xl overflow-hidden shadow-sm border border-gray-100">
-              <Image
-                src="/images/hero-factory.webp"
-                alt="HUAXING PCB manufacturing facility - factory overview"
-                width={550}
-                height={869}
-                className="w-full h-auto object-cover"
-              />
+          <div className="text-center">
+            <h2 className="section-title">Manufacturing Excellence</h2>
+            <p className="section-subtitle text-center mx-auto">
+              Our 45,000 m² manufacturing facility in Shenzhen is equipped with industry-leading 
+              machinery and staffed by 600+ skilled engineers and technicians. Every board is 
+              produced under strict quality controls with full traceability.
+            </p>
+          </div>
+          <div className="mt-8 grid grid-cols-2 max-w-lg mx-auto gap-4">
+            <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 text-center">
+              <div className="text-2xl font-bold text-brand-600">58</div>
+              <div className="text-xs text-gray-500">Max PCB Layers</div>
             </div>
-            <div>
-              <h2 className="section-title">Manufacturing Excellence</h2>
-              <p className="section-subtitle">
-                Our 45,000 m² manufacturing facility in Shenzhen is equipped with industry-leading 
-                machinery and staffed by 600+ skilled engineers and technicians. Every board is 
-                produced under strict quality controls with full traceability.
-              </p>
-              <div className="mt-8 grid grid-cols-2 gap-4">
-                <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 text-center">
-                  <div className="text-2xl font-bold text-brand-600">58</div>
-                  <div className="text-xs text-gray-500">Max PCB Layers</div>
-                </div>
-                <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 text-center">
-                  <div className="text-2xl font-bold text-brand-600">25K+</div>
-                  <div className="text-xs text-gray-500">m² Monthly Capacity</div>
-                </div>
-                <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 text-center">
-                  <div className="text-2xl font-bold text-brand-600">6</div>
-                  <div className="text-xs text-gray-500">Quality Checks</div>
-                </div>
-                <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 text-center">
-                  <div className="text-2xl font-bold text-brand-600">0.2mm</div>
-                  <div className="text-xs text-gray-500">Min. Drill Size</div>
-                </div>
-              </div>
+            <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 text-center">
+              <div className="text-2xl font-bold text-brand-600">25K+</div>
+              <div className="text-xs text-gray-500">m² Monthly Capacity</div>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 text-center">
+              <div className="text-2xl font-bold text-brand-600">6</div>
+              <div className="text-xs text-gray-500">Quality Checks</div>
+            </div>
+            <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 text-center">
+              <div className="text-2xl font-bold text-brand-600">0.2mm</div>
+              <div className="text-xs text-gray-500">Min. Drill Size</div>
             </div>
           </div>
         </div>
@@ -436,15 +428,15 @@ export default function PCBMfgPage() {
             order before production to ensure manufacturability and competitive pricing.
           </p>
           <div className="flex flex-wrap justify-center gap-4 mt-10">
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 bg-white text-brand-700 hover:bg-brand-50 font-semibold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg shadow-brand-900/20"
+            <button
+              onClick={() => setShowInquiry(true)}
+              className="inline-flex items-center gap-2 bg-white text-brand-700 hover:bg-brand-50 font-semibold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg shadow-brand-900/20 cursor-pointer"
             >
               Upload Gerbers & Get Quote
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
               </svg>
-            </Link>
+            </button>
             <Link
               href="/products/pcb-assembly"
               className="inline-flex items-center gap-2 border-2 border-white/40 text-white hover:bg-white/10 font-semibold py-3 px-8 rounded-lg transition-all duration-200"
@@ -460,6 +452,8 @@ export default function PCBMfgPage() {
           </p>
         </div>
       </section>
+
+      <InquiryModal isOpen={showInquiry} onClose={() => setShowInquiry(false)} />
     </>
   );
 }

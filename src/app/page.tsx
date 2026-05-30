@@ -21,7 +21,7 @@ const services = [
     href: '/products/pcb-manufacturing',
     icon: (
       <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 3.75H6.912a2.25 2.25 0 00-2.15 1.588L2.35 13.177a2.25 2.25 0 00-.1.661V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 00-2.15-1.588H15M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 012.013-1.244l.256-.512a2.25 2.25 0 012.013-1.244h3.859M12 3v8.25m0 0l-3-3m3 3l3-3" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 3.75H6.912a2.25 2.25 0 00-2.15 1.588L2.35 13.177a2.25 2.25 0 00-.1.661V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 00-2.15-1.588H15M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 002.013-1.244l.256-.512a2.25 2.25 0 012.013-1.244h3.859M12 3v8.25m0 0l-3-3m3 3l3-3" />
       </svg>
     ),
   },
@@ -148,15 +148,8 @@ export default function HomePage() {
 
   return (
     <>
-      {/* ─── Hero ─── */}
+      {/* Hero */}
       <section className="relative overflow-hidden bg-gray-900 min-h-[85vh] flex items-center">
-        <div className="absolute inset-0">
-          <Image src="/images/old-hero-factory.webp" alt="" width={516} height={600} className="w-full h-full object-cover opacity-30" />
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-900/95 via-gray-900/80 to-gray-900/70" />
-        </div>
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[400px] opacity-15 pointer-events-none hidden lg:block">
-          <Image src="/images/factory-banner2.webp" alt="" width={550} height={869} className="w-full h-auto" />
-        </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
           <div className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-brand-100 text-brand-700 rounded-full text-sm font-medium mb-6">
@@ -213,7 +206,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── Stats Bar ─── */}
+      {/* Stats Bar */}
       <section className="bg-white border-y border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-3 md:grid-cols-6 gap-6">
@@ -227,7 +220,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── Special Offer Banner ─── */}
+      {/* Special Offer Banner */}
       <section className="bg-gradient-to-r from-amber-50 to-amber-100/60 border-y border-amber-200/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 text-center sm:text-left">
@@ -246,11 +239,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── Services Overview ─── */}
+      {/* Services Overview */}
       <section className="relative bg-gray-50 py-20 md:py-28 overflow-hidden">
-        <div className="absolute right-0 top-0 w-1/3 h-full opacity-5 pointer-events-none">
-          <Image src="/images/old-factory.webp" alt="" width={550} height={869} className="w-full h-full object-cover" />
-        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="section-title">Comprehensive PCBA Services</h2>
@@ -288,11 +278,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── Why Choose Us ─── */}
+      {/* Why Choose Us */}
       <section className="relative bg-white py-20 md:py-28 overflow-hidden">
-        <div className="absolute left-0 top-0 w-1/4 h-full opacity-5 pointer-events-none">
-          <Image src="/images/worker-smt.webp" alt="" width={516} height={600} className="w-full h-full object-cover" />
-        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="section-title">Why Choose HUAXING PCBA?</h2>
@@ -328,7 +315,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── Partner Brands ─── */}
+      {/* Partner Brands */}
       <section className="bg-gray-50 py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
@@ -355,12 +342,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── CTA ─── */}
+      {/* CTA */}
       <section className="relative bg-gray-900 py-20 overflow-hidden">
-        <div className="absolute inset-0">
-          <Image src="/images/factory-banner3.webp" alt="" width={550} height={869} className="w-full h-full object-cover opacity-20" />
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-900/90 to-gray-900" />
-        </div>
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white font-heading">
             Ready to Start Your Project?
@@ -401,7 +384,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── FAQ ─── */}
+      {/* FAQ */}
       <section id="faq" className="bg-white py-20 md:py-28">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">

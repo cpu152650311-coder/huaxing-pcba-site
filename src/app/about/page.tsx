@@ -2,6 +2,8 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { useState } from 'react';
+import InquiryModal from '@/components/InquiryModal';
 
 const timeline = [
   {
@@ -137,6 +139,7 @@ const regions = [
 ];
 
 export default function AboutPage() {
+  const [showInquiry, setShowInquiry] = useState(false);
   return (
     <>
       {/* ─── Hero ─── */}
@@ -163,12 +166,12 @@ export default function AboutPage() {
               PCB and PCBA solutions since 1998.
             </p>
             <div className="flex flex-wrap gap-4 mt-8">
-              <Link href="/contact" className="btn-primary">
+              <button onClick={() => setShowInquiry(true)} className="btn-primary cursor-pointer">
                 Start Your Project
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
-              </Link>
+              </button>
               <a href="#timeline" className="btn-secondary">
                 Our Story
               </a>
@@ -606,15 +609,15 @@ export default function AboutPage() {
             quality PCBA at factory-direct prices. Get your free quote within 24 hours.
           </p>
           <div className="flex flex-wrap justify-center gap-4 mt-10">
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 bg-white text-brand-700 hover:bg-brand-50 font-semibold py-3.5 px-8 rounded-lg transition-all duration-200 shadow-lg shadow-brand-900/20"
+            <button
+              onClick={() => setShowInquiry(true)}
+              className="inline-flex items-center gap-2 bg-white text-brand-700 hover:bg-brand-50 font-semibold py-3.5 px-8 rounded-lg transition-all duration-200 shadow-lg shadow-brand-900/20 cursor-pointer"
             >
               Get a Free Quote
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
-            </Link>
+            </button>
             <Link
               href="/capabilities"
               className="inline-flex items-center gap-2 border-2 border-white/40 text-white hover:bg-white/10 font-semibold py-3.5 px-8 rounded-lg transition-all duration-200"
@@ -636,6 +639,8 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      <InquiryModal isOpen={showInquiry} onClose={() => setShowInquiry(false)} />
     </>
   );
 }

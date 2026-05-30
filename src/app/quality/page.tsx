@@ -2,6 +2,8 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
+import InquiryModal from '@/components/InquiryModal';
 
 const certificationList = [
   { name: 'ISO 9001:2015', scope: 'Quality Management System', desc: 'Certified for PCB design, fabrication, assembly, and test services. Audited annually by SGS — covering all production stages from incoming materials to final shipment.' },
@@ -143,6 +145,7 @@ const qualityMetrics = [
 ];
 
 export default function QualityPage() {
+  const [showInquiry, setShowInquiry] = useState(false);
   return (
     <>
       {/* ─── Hero ─── */}
@@ -172,12 +175,12 @@ export default function QualityPage() {
               and 100% AOI coverage across all SMT lines.
             </p>
             <div className="flex flex-wrap gap-4 mt-8">
-              <Link href="/contact" className="btn-primary">
+              <button onClick={() => setShowInquiry(true)} className="btn-primary cursor-pointer">
                 Request Quality Documentation
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
-              </Link>
+              </button>
               <a href="#certifications" className="btn-secondary">
                 View Certifications
               </a>
@@ -247,9 +250,6 @@ export default function QualityPage() {
 
       {/* ─── Inspection Process Flow ─── */}
       <section className="bg-white py-20 md:py-28 overflow-hidden relative" id="inspection-process">
-        <div className="absolute left-0 top-0 w-1/4 h-full opacity-5 pointer-events-none hidden lg:block">
-          <Image src="/images/hero-hero.webp" alt="" width={550} height={869} className="w-full h-full object-cover" />
-        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="section-title">Inspection Process Flow</h2>
@@ -430,15 +430,15 @@ export default function QualityPage() {
             Every project comes with full DFM review and quality documentation.
           </p>
           <div className="flex flex-wrap justify-center gap-4 mt-10">
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 bg-white text-brand-700 hover:bg-brand-50 font-semibold py-3.5 px-8 rounded-lg transition-all duration-200 shadow-lg shadow-brand-900/20"
+            <button
+              onClick={() => setShowInquiry(true)}
+              className="inline-flex items-center gap-2 bg-white text-brand-700 hover:bg-brand-50 font-semibold py-3.5 px-8 rounded-lg transition-all duration-200 shadow-lg shadow-brand-900/20 cursor-pointer"
             >
               Request Free Quote
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
               </svg>
-            </Link>
+            </button>
             <Link
               href="/capabilities"
               className="inline-flex items-center gap-2 border-2 border-white/40 text-white hover:bg-white/10 font-semibold py-3.5 px-8 rounded-lg transition-all duration-200"
@@ -454,6 +454,8 @@ export default function QualityPage() {
           </p>
         </div>
       </section>
+
+      <InquiryModal isOpen={showInquiry} onClose={() => setShowInquiry(false)} />
     </>
   );
 }
