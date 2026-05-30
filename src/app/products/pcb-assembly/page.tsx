@@ -137,24 +137,24 @@ export default function PCBAssemblyPage() {
   return (
     <>
       {/* ─── Hero ─── */}
-      <section className="relative bg-gradient-to-br from-brand-50 via-white to-white overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-brand-100/40 blur-3xl" />
-          <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-brand-100/30 blur-3xl" />
+      <section className="relative bg-gray-900 overflow-hidden">
+        <div className="absolute inset-0">
+          <Image src="/images/app-robot.webp" alt="" width={1024} height={640} className="w-full h-full object-cover opacity-25" />
+          <div className="absolute inset-0 bg-gradient-to-r from-gray-900/90 to-gray-900/70" />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-brand-100 text-brand-700 rounded-full text-sm font-medium mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/20 text-white rounded-full text-sm font-medium mb-6">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3.75H6.912a2.25 2.25 0 00-2.15 1.588L2.35 13.177a2.25 2.25 0 00-.1.661V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 00-2.15-1.588H15M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 002.013-1.244l.256-.512a2.25 2.25 0 012.013-1.244h3.859M12 3v8.25m0 0l-3-3m3 3l3-3" />
               </svg>
               <span>PCBA Assembly</span>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 font-heading leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white font-heading leading-tight">
               Precision PCB Assembly<br />
               <span className="text-brand-600">9 SMT + 4 DIP Lines</span>
             </h1>
-            <p className="mt-6 text-lg md:text-xl text-gray-600 leading-relaxed max-w-2xl">
+            <p className="mt-6 text-lg md:text-xl text-gray-200 leading-relaxed max-w-2xl">
               HUAXING operates 9 fully automatic SMT assembly lines equipped with Siemens/ASM and Yamaha 
               placement machines, plus 4 DIP lines with wave and selective soldering. From 01005 micro-components 
               to complex BGA assemblies — all inspected by AOI, X-ray, and flying probe systems.
@@ -175,9 +175,9 @@ export default function PCBAssemblyPage() {
           {/* Stats bar */}
           <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4">
             {smtStats.map((stat) => (
-              <div key={stat.label} className="bg-white/80 backdrop-blur rounded-xl border border-gray-100 shadow-sm p-5 text-center">
-                <div className="text-2xl md:text-3xl font-bold text-brand-600 font-heading">{stat.value}</div>
-                <div className="text-sm text-gray-500 mt-1">{stat.label}</div>
+              <div key={stat.label} className="bg-white/10 backdrop-blur rounded-xl border border-white/10 shadow-sm p-5 text-center">
+                <div className="text-2xl md:text-3xl font-bold text-white font-heading">{stat.value}</div>
+                <div className="text-sm text-gray-300 mt-1">{stat.label}</div>
               </div>
             ))}
           </div>

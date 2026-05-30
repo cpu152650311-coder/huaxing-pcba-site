@@ -149,11 +149,10 @@ export default function HomePage() {
   return (
     <>
       {/* ─── Hero ─── */}
-      <section className="relative bg-gradient-to-br from-brand-50 via-white to-white overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-brand-100/40 blur-3xl" />
-          <div className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-brand-100/30 blur-3xl" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-brand-50/30 blur-3xl" />
+      <section className="relative overflow-hidden bg-gray-900">
+        <div className="absolute inset-0">
+          <Image src="/images/hero-factory.webp" alt="" width={550} height={869} className="w-full h-full object-cover opacity-40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-gray-900/90 via-gray-900/70 to-gray-900/80" />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
           <div className="max-w-3xl mx-auto text-center">
@@ -245,7 +244,10 @@ export default function HomePage() {
       </section>
 
       {/* ─── Services Overview ─── */}
-      <section className="bg-gray-50 py-20 md:py-28">
+      <section className="relative bg-gray-50 py-20 md:py-28 overflow-hidden">
+        <div className="absolute right-0 top-0 w-1/3 h-full opacity-5 pointer-events-none">
+          <Image src="/images/factory-smt.webp" alt="" width={516} height={600} className="w-full h-full object-cover" />
+        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="section-title">Comprehensive PCBA Services</h2>
@@ -284,7 +286,10 @@ export default function HomePage() {
       </section>
 
       {/* ─── Why Choose Us ─── */}
-      <section className="bg-white py-20 md:py-28">
+      <section className="relative bg-white py-20 md:py-28 overflow-hidden">
+        <div className="absolute left-0 top-0 w-1/4 h-full opacity-5 pointer-events-none">
+          <Image src="/images/hero-hero.webp" alt="" width={550} height={869} className="w-full h-full object-cover" />
+        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="section-title">Why Choose HUAXING PCBA?</h2>
@@ -348,19 +353,23 @@ export default function HomePage() {
       </section>
 
       {/* ─── CTA ─── */}
-      <section className="bg-gradient-to-r from-brand-700 to-brand-600 py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="relative bg-gray-900 py-20 overflow-hidden">
+        <div className="absolute inset-0">
+          <Image src="/images/hero-pcba-fallback.webp" alt="" width={1920} height={1080} className="w-full h-full object-cover opacity-20" />
+          <div className="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-900/90 to-gray-900" />
+        </div>
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white font-heading">
             Ready to Start Your Project?
           </h2>
-          <p className="mt-4 text-lg text-brand-100 max-w-2xl mx-auto">
+          <p className="mt-4 text-lg text-gray-300 max-w-2xl mx-auto">
             Upload your Gerber files and BOM for a free, no-obligation quote within 24 hours. 
             Our engineering team provides DFM feedback on every project.
           </p>
           <div className="flex flex-wrap justify-center gap-4 mt-10">
             <button
               onClick={() => setShowInquiry(true)}
-              className="inline-flex items-center gap-2 bg-white text-brand-700 hover:bg-brand-50 font-semibold py-3.5 px-8 rounded-lg transition-all duration-200 shadow-lg shadow-brand-900/20 cursor-pointer"
+              className="inline-flex items-center gap-2 bg-white text-gray-900 hover:bg-gray-100 font-semibold py-3.5 px-8 rounded-lg transition-all duration-200 shadow-lg shadow-black/20 cursor-pointer"
             >
               Request Free Quote
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -369,7 +378,7 @@ export default function HomePage() {
             </button>
             <Link
               href="/products/pcb-assembly"
-              className="inline-flex items-center gap-2 border-2 border-white/40 text-white hover:bg-white/10 font-semibold py-3.5 px-8 rounded-lg transition-all duration-200"
+              className="inline-flex items-center gap-2 border-2 border-gray-500 text-gray-300 hover:text-white hover:border-gray-300 font-semibold py-3.5 px-8 rounded-lg transition-all duration-200"
             >
               See Assembly Pricing
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -377,7 +386,7 @@ export default function HomePage() {
               </svg>
             </Link>
           </div>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-brand-200">
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-gray-400">
             <span>Zero MOQ</span>
             <span className="hidden sm:inline">&middot;</span>
             <span>Free DFM Review</span>
