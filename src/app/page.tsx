@@ -180,7 +180,7 @@ export default function HomePage() {
             </p>
             <div className="flex flex-wrap justify-center gap-4 mt-10">
               <button onClick={() => setShowInquiry(true)} className="btn-primary text-base py-3.5 px-8 cursor-pointer">
-                Get a Free Quote
+                Request a Free Quote
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
@@ -469,7 +469,7 @@ export default function HomePage() {
               onClick={() => setShowInquiry(true)}
               className="inline-flex items-center gap-2 bg-brand-600 text-white hover:bg-brand-700 font-semibold py-3.5 px-8 rounded-lg transition-all duration-200 shadow-lg shadow-brand-900/20 cursor-pointer"
             >
-              Request Free Quote
+              Request a Free Quote
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
               </svg>
@@ -550,7 +550,7 @@ export default function HomePage() {
               onClick={() => setShowInquiry(true)}
               className="mt-3 inline-flex items-center gap-2 text-brand-600 font-semibold hover:text-brand-700 transition-colors cursor-pointer"
             >
-              Contact Our Team
+              Contact Us
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>

@@ -39,7 +39,7 @@ export default function Header() {
           </nav>
           <div className="hidden lg:flex items-center ml-auto">
             <button onClick={() => setShowInquiry(true)} className="btn-primary text-sm py-2 px-5 cursor-pointer">
-              Get Quote
+              Request a Free Quote
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
@@ -68,7 +68,7 @@ export default function Header() {
               </Link>
             ))}
             <button onClick={() => { setShowInquiry(true); setOpen(false); }} className="block mt-2 w-full btn-primary text-sm text-center py-2 cursor-pointer">
-              Get Quote
+              Request a Free Quote
             </button>
           </div>
         )}

@@ -205,7 +205,7 @@ export default function ContactPage() {
                     <label className="block text-sm font-semibold text-gray-700 mb-1.5">
                       Upload Design Files
                     </label>
-                    <div className="border-2 border-dashed border-gray-200 rounded-xl p-6 bg-gray-50/50 hover:bg-gray-50 hover:border-brand-300 transition-all duration-200">
+                    <div className="relative border-2 border-dashed border-gray-200 rounded-xl p-6 bg-gray-50/50 hover:bg-gray-50 hover:border-brand-300 transition-all duration-200">
                       <div className="text-center">
                         <svg className="w-10 h-10 text-gray-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />

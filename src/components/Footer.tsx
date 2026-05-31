@@ -36,9 +36,9 @@ export default function Footer() {
             </p>
             <button
               onClick={() => setShowInquiry(true)}
-              className="mt-6 inline-block bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-6 py-3 rounded-lg transition-colors"
+              className="mt-6 inline-block bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-6 py-3 rounded-lg transition-colors cursor-pointer"
             >
-              Get Quote
+              Request Quote
             </button>
             <div className="flex gap-3 mt-4">
               <span className="inline-flex items-center gap-1 text-xs text-gray-500">ISO9001</span>
