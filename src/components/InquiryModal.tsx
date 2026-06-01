@@ -1,9 +1,7 @@
 'use client';
 import { useState, useEffect, useRef, FormEvent } from 'react';
 
-// ═══ Get your key at https://web3forms.com → enter email → copy key ═══
-const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY || 'YOUR_KEY_HERE';
-const FORM_ENDPOINT = 'https://api.web3forms.com/submit';
+const FORM_ENDPOINT = 'https://formsubmit.co/ajax/926d2b4f4b2b452b841fba2f8d1af724';
 
 // ── Floating label input ──
 function FloatingField({ name, type = 'text', label, required = false, placeholder = '', rows }: {
@@ -13,10 +11,9 @@ function FloatingField({ name, type = 'text', label, required = false, placehold
   const [focused, setFocused] = useState(false);
   const floated = focused || value.length > 0;
   const bc = floated ? 'border-brand-500 ring-2 ring-brand-500/20' : 'border-gray-200 hover:border-gray-300';
-  const cls = `w-full px-4 pt-5 pb-2 text-sm border bg-transparent rounded-xl outline-none transition-all duration-200 ${bc}`;
+  const cls = `w-full px-4 pt-5 pb-2 text-sm border bg-transparent rounded-xl outline-none transition-all duration-200 ${bc}${rows ? ' resize-none' : ''}`;
   const sp = { name, required, placeholder: placeholder || ' ', value, onFocus: () => setFocused(true), onBlur: () => setFocused(false),
-    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setValue((e.target as HTMLInputElement).value),
-    className: `${cls}${rows ? ' resize-none' : ''}` };
+    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setValue((e.target as HTMLInputElement).value), className: cls };
   return (
     <div className="relative">
       {rows ? <textarea {...sp} rows={rows} /> : <input {...sp} type={type} />}
@@ -39,10 +36,11 @@ export default function InquiryModal({ isOpen, onClose }: { isOpen: boolean; onC
 
   useEffect(() => {
     if (isOpen) {
-      window.addEventListener('keydown', (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); });
+      const h = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+      window.addEventListener('keydown', h);
       setSubmitted(false); setError('');
+      return () => window.removeEventListener('keydown', h);
     }
-    return () => {};
   }, [isOpen, onClose]);
 
   const handleSubmit = async (e: FormEvent) => {
@@ -51,7 +49,6 @@ export default function InquiryModal({ isOpen, onClose }: { isOpen: boolean; onC
     try {
       const form = formRef.current; if (!form) return;
       const fd = new FormData(form);
-      fd.append('access_key', WEB3FORMS_KEY);
       const res = await fetch(FORM_ENDPOINT, { method: 'POST', body: fd });
       const data = await res.json();
       if (data.success) { setSubmitted(true); form.reset(); }
@@ -89,8 +86,8 @@ export default function InquiryModal({ isOpen, onClose }: { isOpen: boolean; onC
             </div>
           ) : (
             <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
-              {/* Web3Forms anti-spam — hidden checkbox, bots auto-check it */}
-              <input type="checkbox" name="botcheck" tabIndex={-1} autoComplete="off" className="absolute -left-[9999px]" />
+              {/* FormSubmit anti-spam — hidden honeypot field */}
+              <input type="text" name="_honey" tabIndex={-1} autoComplete="off" className="absolute -left-[9999px]" />
 
               <div className="grid sm:grid-cols-2 gap-4">
                 <FloatingField name="name" label="Full Name" required />

@@ -3,8 +3,7 @@
 import { useState } from 'react';
 import InquiryModal from '@/components/InquiryModal';
 
-const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY || 'YOUR_KEY_HERE';
-const FORM_ENDPOINT = 'https://api.web3forms.com/submit';
+const FORM_ENDPOINT = 'https://formsubmit.co/ajax/926d2b4f4b2b452b841fba2f8d1af724';
 
 const companyInfo = {
   address: 'Building A, Huaxing Industrial Park, Fuyong Street, Bao\'an District, Shenzhen, Guangdong 518103, China',
@@ -43,7 +42,6 @@ export default function ContactPage() {
     setFormError('');
     const form = e.target as HTMLFormElement;
     const fd = new FormData(form);
-    fd.append('access_key', WEB3FORMS_KEY);
     try {
       const res = await fetch(FORM_ENDPOINT, { method: 'POST', body: fd });
       const data = await res.json();
@@ -115,8 +113,8 @@ export default function ContactPage() {
                   onSubmit={handleSubmit}
                   className="space-y-6"
                 >
-                  {/* Web3Forms anti-spam — bots auto-check this hidden checkbox */}
-                  <input type="checkbox" name="botcheck" tabIndex={-1} autoComplete="off" className="absolute -left-[9999px]" />
+                  {/* FormSubmit anti-spam — hidden honeypot */}
+                  <input type="text" name="_honey" tabIndex={-1} autoComplete="off" className="absolute -left-[9999px]" />
 
                   <div className="grid sm:grid-cols-2 gap-6">
                     <div>
