@@ -30,7 +30,6 @@ function Spinner() {
 
 export default function InquiryModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -38,7 +37,7 @@ export default function InquiryModal({ isOpen, onClose }: { isOpen: boolean; onC
     if (isOpen) {
       const h = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
       window.addEventListener('keydown', h);
-      setSubmitted(false); setError('');
+      setError('');
       return () => window.removeEventListener('keydown', h);
     }
   }, [isOpen, onClose]);
@@ -51,10 +50,16 @@ export default function InquiryModal({ isOpen, onClose }: { isOpen: boolean; onC
       const fd = new FormData(form);
       const res = await fetch(FORM_ENDPOINT, { method: 'POST', body: fd });
       const data = await res.json();
-      if (data.success) { setSubmitted(true); form.reset(); }
-      else { setError(data.message || 'Failed to send. Please email us directly.'); }
-    } catch { setError('Network error. Please email us at sales@huaxingpcba.com.'); }
-    finally { setSubmitting(false); }
+      if (data.success) {
+        window.location.href = '/thank-you';
+      } else {
+        setError(data.message || 'Failed to send. Please email us directly.');
+        setSubmitting(false);
+      }
+    } catch {
+      setError('Network error. Please email us at sales@huaxingpcba.com.');
+      setSubmitting(false);
+    }
   };
 
   if (!isOpen) return null;
@@ -76,41 +81,49 @@ export default function InquiryModal({ isOpen, onClose }: { isOpen: boolean; onC
             <p className="text-sm text-gray-400 mt-1.5">We typically respond within 24 hours</p>
           </div>
 
-          {submitted ? (
-            <div className="p-6 bg-green-50 border border-green-200 rounded-xl text-center">
-              <div className="w-16 h-16 rounded-full bg-green-100 text-green-600 flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              </div>
-              <p className="text-green-700 font-medium text-lg">Thank You!</p>
-              <p className="text-green-600 text-sm mt-1">We'll respond within 24 hours with a detailed quote.</p>
+          <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
+            {/* FormSubmit email config */}
+            <input type="hidden" name="_template" value="table" />
+            <input type="hidden" name="_subject" value="HUAXING PCBA — New Inquiry" />
+            <input type="hidden" name="_autoresponse" value="Thank you for contacting HUAXING PCBA!
+
+We have received your inquiry and our engineering team will review it within 24 hours. You will receive a detailed quote with free DFM (Design for Manufacturing) analysis.
+
+What happens next:
+- Our engineers review your requirements and files
+- We prepare a customized quotation for your project
+- You receive a detailed response within one business day
+
+If you have any urgent questions, please reply to this email or contact us directly:
+📧 sales@huaxingpcba.com
+📍 Shenzhen, Guangdong, China
+
+— HUAXING PCBA Team" />
+
+            {/* Anti-spam */}
+            <input type="text" name="_honey" tabIndex={-1} autoComplete="off" className="absolute -left-[9999px]" />
+
+            <div className="grid sm:grid-cols-2 gap-4">
+              <FloatingField name="name" label="Full Name" required />
+              <FloatingField name="email" type="email" label="Email Address" required />
             </div>
-          ) : (
-            <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
-              {/* FormSubmit anti-spam — hidden honeypot field */}
-              <input type="text" name="_honey" tabIndex={-1} autoComplete="off" className="absolute -left-[9999px]" />
+            <div className="grid sm:grid-cols-2 gap-4">
+              <FloatingField name="company" label="Company" />
+              <FloatingField name="phone" type="tel" label="Phone" />
+            </div>
+            <FloatingField name="message" label="Message" required rows={4} />
 
-              <div className="grid sm:grid-cols-2 gap-4">
-                <FloatingField name="name" label="Full Name" required />
-                <FloatingField name="email" type="email" label="Email Address" required />
-              </div>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <FloatingField name="company" label="Company" />
-                <FloatingField name="phone" type="tel" label="Phone" />
-              </div>
-              <FloatingField name="message" label="Message" required rows={4} />
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">Attachment <span className="text-gray-400 font-normal">(Gerber, BOM, CAD)</span></label>
+              <input type="file" name="attachment" className="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-medium file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100 file:cursor-pointer file:transition-colors cursor-pointer" />
+            </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">Attachment <span className="text-gray-400 font-normal">(Gerber, BOM, CAD)</span></label>
-                <input type="file" name="attachment" className="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-medium file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100 file:cursor-pointer file:transition-colors cursor-pointer" />
-              </div>
-
-              <button type="submit" disabled={submitting} className="w-full py-3.5 bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-brand-500/25 hover:shadow-xl disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer">
-                {submitting ? <><Spinner /><span>Sending...</span></> : 'Submit Inquiry'}
-              </button>
-              {error && <p className="text-sm text-red-600 text-center bg-red-50 p-3 rounded-lg">{error}</p>}
-              <p className="text-xs text-gray-400 text-center">Your information is safe with us. We'll respond within 24 hours.</p>
-            </form>
-          )}
+            <button type="submit" disabled={submitting} className="w-full py-3.5 bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-brand-500/25 hover:shadow-xl disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer">
+              {submitting ? <><Spinner /><span>Sending...</span></> : 'Submit Inquiry'}
+            </button>
+            {error && <p className="text-sm text-red-600 text-center bg-red-50 p-3 rounded-lg">{error}</p>}
+            <p className="text-xs text-gray-400 text-center">Your information is safe with us. We&apos;ll respond within 24 hours.</p>
+          </form>
         </div>
       </div>
     </div>

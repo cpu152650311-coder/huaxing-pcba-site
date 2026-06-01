@@ -46,9 +46,7 @@ export default function ContactPage() {
       const res = await fetch(FORM_ENDPOINT, { method: 'POST', body: fd });
       const data = await res.json();
       if (data.success) {
-        setSubmitted(true);
-        form.reset();
-        setFiles([]);
+        window.location.href = '/thank-you';
       } else {
         setFormError(data.message || 'Failed to send. Please email us directly.');
       }
@@ -113,6 +111,9 @@ export default function ContactPage() {
                   onSubmit={handleSubmit}
                   className="space-y-6"
                 >
+                  {/* FormSubmit email config */}
+                  <input type="hidden" name="_template" value="table" />
+                  <input type="hidden" name="_subject" value="HUAXING PCBA — New Inquiry" />
                   {/* FormSubmit anti-spam — hidden honeypot */}
                   <input type="text" name="_honey" tabIndex={-1} autoComplete="off" className="absolute -left-[9999px]" />
 
