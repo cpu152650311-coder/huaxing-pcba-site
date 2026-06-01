@@ -6,7 +6,8 @@ const SMTP_HOST = process.env.SMTP_HOST || 'smtp.hostinger.com';
 const SMTP_PORT = Number(process.env.SMTP_PORT) || 465;
 const SMTP_USER = process.env.SMTP_USER || 'info@huaxingpcba.com';
 const SMTP_PASS = process.env.SMTP_PASS || '';
-const SMTP_TO   = process.env.SMTP_TO   || 'info@huaxingpcba.com';
+const SMTP_TO   = process.env.SMTP_TO   || 'sales@huaxingpcba.com';
+const DISPLAY_EMAIL = 'info@huaxingpcba.com';
 
 export async function POST(request: NextRequest) {
   try {
