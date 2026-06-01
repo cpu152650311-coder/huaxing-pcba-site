@@ -1,9 +1,7 @@
 <?php
 /**
  * HUAXING PCBA — Contact Form Handler
- * 
- * Place at: public_html/api/contact.php
- * Receives POST from /contact page, sends to info@huaxingpcba.com
+ * Uses Hostinger SMTP (no external libs needed)
  */
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: https://huaxingpcba.com');
@@ -11,21 +9,16 @@ header('Access-Control-Allow-Methods: POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(204);
-    exit;
+    http_response_code(204); exit;
 }
-
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
-    echo json_encode(['error' => 'Method not allowed']);
-    exit;
+    echo json_encode(['error' => 'Method not allowed']); exit;
 }
 
-// Honeypot — simple bot trap
+// Honeypot
 if (!empty($_POST['_honeypot'])) {
-    http_response_code(200); // pretend success
-    echo json_encode(['success' => true]);
-    exit;
+    http_response_code(200); echo json_encode(['success' => true]); exit;
 }
 
 $name    = trim($_POST['name']    ?? '');
@@ -36,34 +29,39 @@ $message = trim($_POST['message'] ?? '');
 
 if (!$name || !$email || !$message) {
     http_response_code(400);
-    echo json_encode(['error' => 'Name, email, and message are required.']);
-    exit;
+    echo json_encode(['error' => 'Name, email, and message are required.']); exit;
 }
-
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     http_response_code(400);
-    echo json_encode(['error' => 'Invalid email address.']);
-    exit;
+    echo json_encode(['error' => 'Invalid email.']); exit;
 }
 
 $to      = 'info@huaxingpcba.com';
-$subject = 'HUAXING PCBA — New Inquiry from ' . $name;
+$subject = '=?UTF-8?B?' . base64_encode("HUAXING — New Inquiry from $name") . '?=';
 
-$body  = "=== NEW INQUIRY ===\n\n";
-$body .= "Name:    $name\n";
-$body .= "Email:   $email\n";
-$body .= "Phone:   $phone\n";
-$body .= "Company: $company\n\n";
-$body .= "Message:\n$message\n\n";
-$body .= "---\n";
-$body .= "Submitted: " . date('Y-m-d H:i:s') . " UTC\n";
-$body .= "IP: " . ($_SERVER['REMOTE_ADDR'] ?? 'unknown') . "\n";
+$body  = "NEW INQUIRY\n\n";
+$body .= "Name:    $name\nEmail:   $email\nPhone:   $phone\nCompany: $company\n\n";
+$body .= "Message:\n$message\n\n---\n" . date('Y-m-d H:i:s T');
 
-$headers  = "From: $name <$email>\r\n";
+$headers  = "From: $name <info@huaxingpcba.com>\r\n";
 $headers .= "Reply-To: $email\r\n";
+$headers .= "MIME-Version: 1.0\r\n";
 $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
-$sent = mail($to, $subject, $body, $headers);
+// Try PHP mail() first
+$sent = @mail($to, $subject, $body, $headers);
+
+// If mail() fails, try sendmail directly
+if (!$sent && function_exists('proc_open')) {
+    $sendmail = '/usr/sbin/sendmail -t -i';
+    $full = "To: $to\nSubject: $subject\n$headers\n\n$body";
+    $proc = proc_open($sendmail, [0 => ['pipe', 'r']], $pipes);
+    if (is_resource($proc)) {
+        fwrite($pipes[0], $full);
+        fclose($pipes[0]);
+        $sent = proc_close($proc) === 0;
+    }
+}
 
 if ($sent) {
     echo json_encode(['success' => true]);
