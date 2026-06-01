@@ -161,20 +161,25 @@ export default function HomePage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-brand-50 via-white to-white min-h-[85vh] flex items-center">
+      <section className="relative min-h-[85vh] flex items-center bg-gray-900 overflow-hidden">
+        <div className="absolute inset-0">
+          <img src="/images/hero-pcba-concept.webp" alt="" className="w-full h-full object-cover opacity-25" />
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-900/70 via-gray-900/50 to-gray-900/95" />
+        </div>
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
           <div className="max-w-3xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-brand-100 text-brand-700 rounded-full text-sm font-medium mb-6">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/10 backdrop-blur border border-white/20 text-white/90 rounded-full text-sm font-medium mb-6">
+              <svg className="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               <span>ISO9001 &amp; UL Certified Manufacturer</span>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 font-heading leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
               Premium PCB &amp; PCBA<br />
-              <span className="text-brand-600">Manufacturing</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-orange-400">Manufacturing</span>
             </h1>
-            <p className="mt-6 text-lg md:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
+            <p className="mt-6 text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto">
               25+ years of PCB manufacturing excellence. Shenzhen-based factory with 9 SMT lines, 
               5 DIP lines, and direct pricing — no middlemen. From prototype to volume production.
             </p>
@@ -455,12 +460,15 @@ export default function HomePage() {
       </section>
 
       {/* CTA */}
-      <section className="relative bg-gradient-to-br from-brand-50 via-white to-white py-20 overflow-hidden">
+      <section className="relative py-24 bg-gradient-to-br from-gray-900 via-brand-900 to-gray-900 overflow-hidden">
+        <div className="absolute inset-0">
+          <img src="/images/hero-pcba-concept.webp" alt="" className="w-full h-full object-cover opacity-10" />
+        </div>
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 font-heading">
+          <h2 className="text-3xl md:text-4xl font-bold text-white">
             Ready to Start Your Project?
           </h2>
-          <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="mt-4 text-lg text-gray-300 max-w-2xl mx-auto">
             Upload your Gerber files and BOM for a free, no-obligation quote within 24 hours. 
             Our engineering team provides DFM feedback on every project.
           </p>
@@ -476,7 +484,7 @@ export default function HomePage() {
             </button>
             <Link
               href="/products/pcb-assembly"
-              className="inline-flex items-center gap-2 border-2 border-gray-200 text-gray-500 hover:text-gray-700 hover:border-gray-300 font-semibold py-3.5 px-8 rounded-lg transition-all duration-200"
+              className="inline-flex items-center gap-2 border-2 border-white/20 text-gray-300 hover:text-white hover:border-white/40 font-semibold py-3.5 px-8 rounded-lg transition-all duration-200"
             >
               See Assembly Pricing
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -491,7 +499,7 @@ export default function HomePage() {
             <span className="hidden sm:inline">&middot;</span>
             <span>ISO9001 &amp; UL Certified</span>
             <span className="hidden sm:inline">&middot;</span>
-            <span>24/7 Support</span>
+            <span>24h Response</span>
           </div>
         </div>
       </section>

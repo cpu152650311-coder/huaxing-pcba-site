@@ -1,6 +1,8 @@
 'use client';
 import { useState, useEffect, useRef, FormEvent } from 'react';
 
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '';
+
 // ── Floating label input field ──
 function FloatingField({
   name,
@@ -88,9 +90,17 @@ export default function InquiryModal({ isOpen, onClose }: { isOpen: boolean; onC
     };
     if (isOpen) {
       window.addEventListener('keydown', handleEsc);
-      // Reset state when reopening
       setSubmitted(false);
       setError('');
+
+      // Load Turnstile script (if configured)
+      if (TURNSTILE_SITE_KEY && !document.querySelector('script[src*="turnstile"]')) {
+        const script = document.createElement('script');
+        script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+      }
     }
     return () => window.removeEventListener('keydown', handleEsc);
   }, [isOpen, onClose]);
@@ -220,6 +230,13 @@ export default function InquiryModal({ isOpen, onClose }: { isOpen: boolean; onC
                   className="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-medium file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100 file:cursor-pointer file:transition-colors duration-200 cursor-pointer"
                 />
               </div>
+
+              {/* Turnstile — invisible anti-spam (Cloudflare, free) */}
+              {TURNSTILE_SITE_KEY && (
+                <div className="flex justify-center">
+                  <div className="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-theme="light" />
+                </div>
+              )}
 
               {/* ── Submit ── */}
               <button
