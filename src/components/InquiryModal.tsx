@@ -78,6 +78,8 @@ function Spinner() {
 // ── Main Modal ──
 export default function InquiryModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
@@ -90,13 +92,27 @@ export default function InquiryModal({ isOpen, onClose }: { isOpen: boolean; onC
     return () => window.removeEventListener('keydown', handleEsc);
   }, [isOpen, onClose]);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
-    // Brief delay so user sees the loading state before redirect
-    setTimeout(() => {
-      formRef.current?.submit();
-    }, 500);
+    setError('');
+    try {
+      const form = formRef.current;
+      if (!form) return;
+      const fd = new FormData(form);
+      const res = await fetch('/api/contact.php', { method: 'POST', body: fd });
+      if (res.ok) {
+        setSubmitted(true);
+         form.reset();
+      } else {
+        const data = await res.json().catch(() => ({}));
+        setError((data as { error?: string })?.error || 'Failed to send. Please email us directly.');
+      }
+    } catch {
+      setError('Network error. Please email us directly at info@huaxingpcba.com.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   if (!isOpen) return null;
@@ -155,23 +171,19 @@ export default function InquiryModal({ isOpen, onClose }: { isOpen: boolean; onC
           {/* Form */}
           <form
             ref={formRef}
-            action="https://formsubmit.co/926d2b4f4b2b452b841fba2f8d1af724"
+            action="/api/contact.php"
             method="POST"
             encType="multipart/form-data"
             onSubmit={handleSubmit}
             className="space-y-5"
           >
             {/* ── Hidden fields ── */}
-            <input type="hidden" name="_next" value="https://huaxingpcba.com/thank-you/" />
             <input type="hidden" name="_subject" value="AD New Inquiry from Huaxing PCBA Website Contact Form" />
-            <input type="hidden" name="_captcha" value="true" />
-            <input type="hidden" name="_template" value="table" />
-            <input type="hidden" name="_autoresponse" value="Thank you for contacting Huaxing PCBA. We have received your inquiry and will respond within 24 hours." />
 
             {/* Honey pot — invisible to humans, traps bots */}
             <input
               type="text"
-              name="_honey"
+              name="_honeypot"
               tabIndex={-1}
               autoComplete="off"
               className="absolute -left-[9999px] opacity-0 h-0 w-0"
@@ -205,20 +217,30 @@ export default function InquiryModal({ isOpen, onClose }: { isOpen: boolean; onC
             </div>
 
             {/* ── Submit ── */}
-            <button
-              type="submit"
-              disabled={submitting}
-              className="w-full py-3.5 bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-brand-500/25 hover:shadow-xl hover:shadow-brand-500/30 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 active:scale-[0.98]"
-            >
-              {submitting ? (
-                <>
-                  <Spinner />
-                  <span>Sending...</span>
-                </>
-              ) : (
-                'Submit Inquiry'
-              )}
-            </button>
+            {submitted ? (
+              <div className="p-4 bg-green-50 border border-green-200 rounded-xl text-center">
+                <p className="text-green-700 font-medium">Thank you! We'll respond within 24 hours.</p>
+              </div>
+            ) : (
+              <button
+                type="submit"
+                disabled={submitting}
+                className="w-full py-3.5 bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-brand-500/25 hover:shadow-xl hover:shadow-brand-500/30 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 active:scale-[0.98]"
+              >
+                {submitting ? (
+                  <>
+                    <Spinner />
+                    <span>Sending...</span>
+                  </>
+                ) : (
+                  'Submit Inquiry'
+                )}
+              </button>
+            )}
+
+            {error && (
+              <p className="text-sm text-red-600 text-center bg-red-50 p-3 rounded-lg">{error}</p>
+            )}
 
             <p className="text-xs text-gray-400 text-center">
               Your information is safe with us. We&apos;ll respond within 24 hours.

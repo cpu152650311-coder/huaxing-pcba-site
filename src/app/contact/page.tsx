@@ -44,7 +44,7 @@ export default function ContactPage() {
     }
   };
 
-  const FORM_ENDPOINT = 'https://formsubmit.co/info@huaxingpcba.com';
+  const FORM_ENDPOINT = '/api/contact.php';
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
