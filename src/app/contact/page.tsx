@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import InquiryModal from '@/components/InquiryModal';
 
-const FORM_ENDPOINT = '/api/contact';
+const FORM_ENDPOINT = '/api/contact.php';
 
 const companyInfo = {
   address: 'Building A, Huaxing Industrial Park, Fuyong Street, Bao\'an District, Shenzhen, Guangdong 518103, China',

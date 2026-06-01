@@ -113,7 +113,7 @@ export default function InquiryModal({ isOpen, onClose }: { isOpen: boolean; onC
       const form = formRef.current;
       if (!form) return;
       const fd = new FormData(form);
-      const res = await fetch('/api/contact', { method: 'POST', body: fd });
+      const res = await fetch('/api/contact.php', { method: 'POST', body: fd });
       if (res.ok) {
         setSubmitted(true);
         form.reset();
