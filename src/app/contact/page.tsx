@@ -1,8 +1,9 @@
 'use client';
 
-import Link from 'next/link';
 import { useState } from 'react';
 import InquiryModal from '@/components/InquiryModal';
+
+const FORM_ENDPOINT = 'https://formsubmit.co/926d2b4f4b2b452b841fba2f8d1af724';
 
 const companyInfo = {
   address: 'Building A, Huaxing Industrial Park, Fuyong Street, Bao\'an District, Shenzhen, Guangdong 518103, China',
@@ -23,20 +24,9 @@ const acceptedFiles = [
 ];
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    company: '',
-    message: '',
-  });
   const [files, setFiles] = useState<File[]>([]);
   const [submitted, setSubmitted] = useState(false);
   const [showInquiry, setShowInquiry] = useState(false);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -44,29 +34,9 @@ export default function ContactPage() {
     }
   };
 
-  const FORM_ENDPOINT = '/api/contact.php';
-
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const form = e.target as HTMLFormElement;
-    const formData = new FormData(form);
-
-    fetch(FORM_ENDPOINT, {
-      method: 'POST',
-      body: formData,
-    })
-      .then((res) => {
-        if (res.ok || res.redirected) {
-          setSubmitted(true);
-          setFormData({ name: '', email: '', phone: '', company: '', message: '' });
-          setFiles([]);
-        } else {
-          alert('Submission failed. Please email us directly at info@huaxingpcba.com.');
-        }
-      })
-      .catch(() => {
-        alert('Network error. Please email us directly at info@huaxingpcba.com.');
-      });
+    // Track submission for UI state; form submits to FormSubmit natively
+    setSubmitted(true);
   };
 
   return (
@@ -81,12 +51,12 @@ export default function ContactPage() {
               </svg>
               <span>Get in Touch</span>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 font-heading leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
               Let&apos;s Build Your<br />
               <span className="text-brand-600">Next Project</span>
             </h1>
             <p className="mt-6 text-lg md:text-xl text-gray-600 leading-relaxed max-w-2xl">
-              Send us your PCB files and requirements. Our engineering team reviews every project 
+              Send us your PCB files and requirements. Our engineering team reviews every project
               within 24 hours and provides a detailed quote with free DFM feedback.
             </p>
           </div>
@@ -99,9 +69,9 @@ export default function ContactPage() {
           <div className="grid lg:grid-cols-5 gap-12">
             {/* ─── Form ─── */}
             <div className="lg:col-span-3">
-              <h2 className="section-title">Request a Quote</h2>
-              <p className="section-subtitle">
-                Fill in your details and upload your design files. We&apos;ll get back to you 
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">Request a Quote</h2>
+              <p className="text-lg text-gray-500 mb-8">
+                Fill in your details and upload your design files. We&apos;ll get back to you
                 with a comprehensive quote and DFM analysis.
               </p>
 
@@ -112,17 +82,36 @@ export default function ContactPage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-bold text-green-800 font-heading">Thank You!</h3>
+                  <h3 className="text-xl font-bold text-green-800">Thank You!</h3>
                   <p className="mt-2 text-green-700">
-                    Your inquiry has been received. Our engineering team will review your files and 
+                    Your inquiry has been received. Our engineering team will review your files and
                     respond within 24 hours with a detailed quote and DFM feedback.
                   </p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="mt-10 space-y-6" encType="multipart/form-data">
-                  <input type="hidden" name="_subject" value="HUAXING PCBA - New Inquiry from Website" />
+                <form
+                  action={FORM_ENDPOINT}
+                  method="POST"
+                  encType="multipart/form-data"
+                  onSubmit={handleSubmit}
+                  className="space-y-6"
+                >
+                  {/* ── FormSubmit configuration ── */}
+                  <input type="hidden" name="_next" value="https://huaxingpcba.com/thank-you/" />
+                  <input type="hidden" name="_subject" value="HUAXING PCBA — New Inquiry from Website" />
                   <input type="hidden" name="_captcha" value="true" />
-                  <input type="hidden" name="_template" value="box" />
+                  <input type="hidden" name="_template" value="table" />
+                  <input type="hidden" name="_autoresponse" value="Thank you for contacting HUAXING PCBA. We have received your inquiry and will respond within 24 hours." />
+
+                  {/* Honey pot — invisible to humans, traps bots */}
+                  <input
+                    type="text"
+                    name="_honey"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    className="absolute -left-[9999px] opacity-0 h-0 w-0"
+                  />
+
                   <div className="grid sm:grid-cols-2 gap-6">
                     <div>
                       <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-1.5">
@@ -133,8 +122,6 @@ export default function ContactPage() {
                         id="name"
                         name="name"
                         required
-                        value={formData.name}
-                        onChange={handleChange}
                         placeholder="Your name"
                         className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all"
                       />
@@ -148,8 +135,6 @@ export default function ContactPage() {
                         id="email"
                         name="email"
                         required
-                        value={formData.email}
-                        onChange={handleChange}
                         placeholder="you@company.com"
                         className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all"
                       />
@@ -162,8 +147,6 @@ export default function ContactPage() {
                         type="tel"
                         id="phone"
                         name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
                         placeholder="+86 / +1 / etc."
                         className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all"
                       />
@@ -176,8 +159,6 @@ export default function ContactPage() {
                         type="text"
                         id="company"
                         name="company"
-                        value={formData.company}
-                        onChange={handleChange}
                         placeholder="Your company"
                         className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all"
                       />
@@ -193,8 +174,6 @@ export default function ContactPage() {
                       name="message"
                       required
                       rows={5}
-                      value={formData.message}
-                      onChange={handleChange}
                       placeholder="Describe your project — PCB layers, quantity, surface finish, assembly requirements, target lead time, etc."
                       className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all resize-y"
                     />
@@ -216,6 +195,7 @@ export default function ContactPage() {
                         <p className="text-xs text-gray-400 mt-1">Gerber, BOM, Pick & Place, CAD files accepted</p>
                         <input
                           type="file"
+                          name="attachment"
                           multiple
                           onChange={handleFileChange}
                           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
@@ -240,7 +220,6 @@ export default function ContactPage() {
                     </p>
                   </div>
 
-                  {/* Accepted file types */}
                   <div className="flex flex-wrap gap-2">
                     {acceptedFiles.map((file) => (
                       <span key={file.label} className="inline-flex items-center gap-1 px-3 py-1.5 bg-gray-50 border border-gray-100 rounded-full text-xs text-gray-500">
@@ -252,7 +231,7 @@ export default function ContactPage() {
 
                   <button
                     type="submit"
-                    className="btn-primary w-full justify-center text-base py-3.5"
+                    className="w-full py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-brand-500/25 flex items-center justify-center gap-2"
                   >
                     Submit Inquiry
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -261,9 +240,6 @@ export default function ContactPage() {
                   </button>
 
                   <p className="text-xs text-gray-400 text-center">
-                    <svg className="w-3.5 h-3.5 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                    </svg>
                     Your information is kept confidential and will never be shared with third parties.
                   </p>
                 </form>
@@ -272,9 +248,8 @@ export default function ContactPage() {
 
             {/* ─── Company Info Sidebar ─── */}
             <div className="lg:col-span-2 space-y-8">
-              {/* Contact Details */}
-              <div className="card p-8">
-                <h3 className="text-xl font-bold text-gray-900 font-heading mb-6">Contact Information</h3>
+              <div className="p-8 rounded-2xl border border-gray-100 bg-white">
+                <h3 className="text-xl font-bold text-gray-900 mb-6">Contact Information</h3>
                 <div className="space-y-5">
                   <div className="flex gap-4">
                     <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-brand-50 text-brand-600 flex items-center justify-center">
@@ -291,9 +266,8 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              {/* Business Hours */}
-              <div className="card p-8">
-                <h3 className="text-xl font-bold text-gray-900 font-heading mb-6">Business Hours</h3>
+              <div className="p-8 rounded-2xl border border-gray-100 bg-white">
+                <h3 className="text-xl font-bold text-gray-900 mb-6">Business Hours</h3>
                 <div className="space-y-3">
                   {businessHours.map((item) => (
                     <div key={item.day} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
@@ -308,153 +282,11 @@ export default function ContactPage() {
                   Time zone: China Standard Time (UTC+8)
                 </p>
               </div>
-
-              {/* 24h Response Commitment */}
-              <div className="card p-8 bg-gradient-to-br from-brand-50 to-white border-brand-100">
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-brand-100 text-brand-600 flex items-center justify-center">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-gray-900 font-heading">Response Within 24 Hours</h3>
-                    <p className="mt-2 text-sm text-gray-600 leading-relaxed">
-                      Our engineering team reviews every inquiry within one business day. You&apos;ll 
-                      receive a detailed quote with DFM analysis, lead time estimates, and our 
-                      recommendations for your project — all free of charge.
-                    </p>
-                    <div className="mt-4 flex flex-wrap gap-3">
-                      <span className="inline-flex items-center gap-1 text-xs text-brand-700 bg-brand-100 px-3 py-1.5 rounded-full font-medium">
-                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        Free DFM Review
-                      </span>
-                      <span className="inline-flex items-center gap-1 text-xs text-brand-700 bg-brand-100 px-3 py-1.5 rounded-full font-medium">
-                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        No Obligation Quote
-                      </span>
-                      <span className="inline-flex items-center gap-1 text-xs text-brand-700 bg-brand-100 px-3 py-1.5 rounded-full font-medium">
-                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        Confidential
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ─── Why Contact Us ─── */}
-      <section className="bg-gray-50 py-20 md:py-28">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="section-title">Why Send Your Inquiry to HUAXING?</h2>
-            <p className="section-subtitle mx-auto">
-              From quick-turn prototypes to high-volume production, we deliver quality, speed, and value.
-            </p>
-          </div>
-
-          <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              {
-                title: 'Direct Factory Pricing',
-                desc: 'Shenzhen-based manufacturer with zero middlemen. PCB assembly from $25 for 1-20 PCS.',
-                icon: 'M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
-              },
-              {
-                title: 'Free DFM Review',
-                desc: 'Our engineers analyze your Gerber files and BOM for manufacturability issues before production — at no cost.',
-                icon: 'M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z',
-              },
-              {
-                title: 'Zero MOQ',
-                desc: 'No minimum order quantity. We accept prototype quantities as low as 1 PCB and scale to 10,000+.',
-                icon: 'M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z',
-              },
-              {
-                title: 'Fast Turnaround',
-                desc: 'PCB prototypes in 24 hours, assembly in 5-7 days. Expedited options available for urgent projects.',
-                icon: 'M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z',
-              },
-            ].map((item) => (
-              <div key={item.title} className="card p-6 group hover:border-brand-200 transition-all duration-200">
-                <div className="w-12 h-12 rounded-lg bg-brand-50 text-brand-600 flex items-center justify-center mb-4 group-hover:bg-brand-100 transition-colors">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={item.icon} />
-                  </svg>
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 font-heading">{item.title}</h3>
-                <p className="mt-2 text-sm text-gray-500 leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── CTA ─── */}
-      <section className="bg-gradient-to-r from-brand-700 to-brand-600 py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white font-heading">
-            Ready to Get Started?
-          </h2>
-          <p className="mt-4 text-lg text-brand-100 max-w-2xl mx-auto">
-            Upload your Gerber files and BOM above, or reach out directly. Either way, 
-            you&apos;ll get a detailed quote within 24 hours — guaranteed.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4 mt-10">
-            <button
-              onClick={() => setShowInquiry(true)}
-              className="btn-primary text-base py-3.5 px-8"
-            >
-              Get a Free Quote
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </button>
-          </div>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-brand-200">
-            <span>Zero MOQ</span>
-            <span className="hidden sm:inline">&middot;</span>
-            <span>Free DFM Review</span>
-            <span className="hidden sm:inline">&middot;</span>
-            <span>ISO9001 &amp; UL Certified</span>
-            <span className="hidden sm:inline">&middot;</span>
-            <span>24h Response Time</span>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── Quick Links ─── */}
-      <section className="bg-white py-16 md:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="section-title">Explore Our Services</h2>
-            <p className="section-subtitle mx-auto">
-              Not ready to reach out yet? Learn more about what we offer.
-            </p>
-          </div>
-
-          <div className="mt-10 flex flex-wrap justify-center gap-4">
-            <Link href="/products/pcb-manufacturing" className="btn-secondary text-sm py-2.5 px-6">
-              PCB Manufacturing
-            </Link>
-            <Link href="/products/pcb-assembly" className="btn-secondary text-sm py-2.5 px-6">
-              PCB Assembly
-            </Link>
-            <Link href="/capabilities" className="btn-secondary text-sm py-2.5 px-6">
-              Full Capabilities
-            </Link>
-          </div>
-        </div>
-      </section>
       <InquiryModal isOpen={showInquiry} onClose={() => setShowInquiry(false)} />
     </>
   );

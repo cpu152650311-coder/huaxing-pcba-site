@@ -36,7 +36,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     echo json_encode(['error' => 'Invalid email.']); exit;
 }
 
-$to      = 'info@huaxingpcba.com';
+$to      = 'sales@huaxingpcba.com';
 $subject = '=?UTF-8?B?' . base64_encode("HUAXING — New Inquiry from $name") . '?=';
 
 $body  = "NEW INQUIRY\n\n";

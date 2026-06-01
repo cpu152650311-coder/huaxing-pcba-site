@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, useRef, FormEvent } from 'react';
+import { useState, useEffect } from 'react';
 
 // ── Floating label input field ──
 function FloatingField({
@@ -61,26 +61,9 @@ function FloatingField({
   );
 }
 
-// ── Spinner ──
-function Spinner() {
-  return (
-    <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
-      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-      <path
-        className="opacity-75"
-        fill="currentColor"
-        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-      />
-    </svg>
-  );
-}
-
 // ── Main Modal ──
 export default function InquiryModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
-  const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState('');
-  const formRef = useRef<HTMLFormElement>(null);
+  const FORM_ENDPOINT = 'https://formsubmit.co/926d2b4f4b2b452b841fba2f8d1af724';
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -91,29 +74,6 @@ export default function InquiryModal({ isOpen, onClose }: { isOpen: boolean; onC
     }
     return () => window.removeEventListener('keydown', handleEsc);
   }, [isOpen, onClose]);
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    setSubmitting(true);
-    setError('');
-    try {
-      const form = formRef.current;
-      if (!form) return;
-      const fd = new FormData(form);
-      const res = await fetch('/api/contact.php', { method: 'POST', body: fd });
-      if (res.ok) {
-        setSubmitted(true);
-         form.reset();
-      } else {
-        const data = await res.json().catch(() => ({}));
-        setError((data as { error?: string })?.error || 'Failed to send. Please email us directly.');
-      }
-    } catch {
-      setError('Network error. Please email us directly at info@huaxingpcba.com.');
-    } finally {
-      setSubmitting(false);
-    }
-  };
 
   if (!isOpen) return null;
 
@@ -127,9 +87,6 @@ export default function InquiryModal({ isOpen, onClose }: { isOpen: boolean; onC
         @keyframes if-fade-in {
           from { opacity: 0; }
           to   { opacity: 1; }
-        }
-        @keyframes if-spin {
-          to { transform: rotate(360deg); }
         }
       `}</style>
 
@@ -148,7 +105,7 @@ export default function InquiryModal({ isOpen, onClose }: { isOpen: boolean; onC
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 hover:scale-110 active:scale-95 flex items-center justify-center text-gray-400 hover:text-gray-600 transition-all duration-200"
+          className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 hover:scale-110 active:scale-95 flex items-center justify-center text-gray-400 hover:text-gray-600 transition-all duration-200 cursor-pointer"
           aria-label="Close"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -164,26 +121,28 @@ export default function InquiryModal({ isOpen, onClose }: { isOpen: boolean; onC
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.75 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
               </svg>
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 font-heading">Get a Free Quote</h3>
+            <h3 className="text-2xl font-bold text-gray-900">Get a Free Quote</h3>
             <p className="text-sm text-gray-400 mt-1.5">We typically respond within 24 hours</p>
           </div>
 
-          {/* Form */}
+          {/* Form — submits directly to FormSubmit for built-in honeypot anti-spam */}
           <form
-            ref={formRef}
-            action="/api/contact.php"
+            action={FORM_ENDPOINT}
             method="POST"
             encType="multipart/form-data"
-            onSubmit={handleSubmit}
             className="space-y-5"
           >
-            {/* ── Hidden fields ── */}
-            <input type="hidden" name="_subject" value="AD New Inquiry from Huaxing PCBA Website Contact Form" />
+            {/* ── FormSubmit configuration ── */}
+            <input type="hidden" name="_next" value="https://huaxingpcba.com/thank-you/" />
+            <input type="hidden" name="_subject" value="HUAXING PCBA — New Inquiry" />
+            <input type="hidden" name="_captcha" value="true" />
+            <input type="hidden" name="_template" value="table" />
+            <input type="hidden" name="_autoresponse" value="Thank you for contacting HUAXING PCBA. We have received your inquiry and will respond within 24 hours with a detailed quote and free DFM analysis." />
 
-            {/* Honey pot — invisible to humans, traps bots */}
+            {/* Honey pot — invisible to humans, traps bots (FormSubmit's built-in anti-spam) */}
             <input
               type="text"
-              name="_honeypot"
+              name="_honey"
               tabIndex={-1}
               autoComplete="off"
               className="absolute -left-[9999px] opacity-0 h-0 w-0"
@@ -217,30 +176,12 @@ export default function InquiryModal({ isOpen, onClose }: { isOpen: boolean; onC
             </div>
 
             {/* ── Submit ── */}
-            {submitted ? (
-              <div className="p-4 bg-green-50 border border-green-200 rounded-xl text-center">
-                <p className="text-green-700 font-medium">Thank you! We'll respond within 24 hours.</p>
-              </div>
-            ) : (
-              <button
-                type="submit"
-                disabled={submitting}
-                className="w-full py-3.5 bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-brand-500/25 hover:shadow-xl hover:shadow-brand-500/30 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 active:scale-[0.98]"
-              >
-                {submitting ? (
-                  <>
-                    <Spinner />
-                    <span>Sending...</span>
-                  </>
-                ) : (
-                  'Submit Inquiry'
-                )}
-              </button>
-            )}
-
-            {error && (
-              <p className="text-sm text-red-600 text-center bg-red-50 p-3 rounded-lg">{error}</p>
-            )}
+            <button
+              type="submit"
+              className="w-full py-3.5 bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-brand-500/25 hover:shadow-xl hover:shadow-brand-500/30 active:scale-[0.98] cursor-pointer"
+            >
+              Submit Inquiry
+            </button>
 
             <p className="text-xs text-gray-400 text-center">
               Your information is safe with us. We&apos;ll respond within 24 hours.

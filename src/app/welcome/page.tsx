@@ -27,9 +27,18 @@ const advantages = [
 ];
 
 const testimonials = [
-  { quote: 'HUAXING delivered our automotive ECU boards ahead of schedule with zero defects. Their DFM feedback saved us two design iterations.', company: 'European Tier-1 Automotive Supplier', icon: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z' },
-  { quote: 'We switched 12 medical device SKUs to HUAXING. 40% cost reduction, same IPC Class 3 quality. Their documentation package is outstanding.', company: 'US Medical Device Manufacturer', icon: 'M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z' },
-  { quote: 'From prototype to 50k units in 8 weeks. HUAXING managed the entire BOM procurement — 487 line items, zero shortages.', company: 'Industrial IoT Scale-Up', icon: 'M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z' },
+  { quote: 'HUAXING delivered our automotive ECU boards ahead of schedule with zero defects. Their DFM feedback saved us two design iterations.', company: 'European Tier-1 Automotive Supplier' },
+  { quote: 'We switched 12 medical device SKUs to HUAXING. 40% cost reduction, same IPC Class 3 quality. Their documentation package is outstanding.', company: 'US Medical Device Manufacturer' },
+  { quote: 'From prototype to 50k units in 8 weeks. HUAXING managed the entire BOM procurement — 487 line items, zero shortages.', company: 'Industrial IoT Scale-Up' },
+];
+
+const partners = [
+  { name: 'Tesla', file: 'partner-tesla.webp' },
+  { name: 'Avnet', file: 'partner-avnet.webp' },
+  { name: 'Microchip', file: 'partner-microchip.webp' },
+  { name: 'Tyco', file: 'partner-tyco.webp' },
+  { name: 'Harley-Davidson', file: 'partner-harley.webp' },
+  { name: 'Hexagon', file: 'partner-hexagon.webp' },
 ];
 
 export default function WelcomePage() {
@@ -37,24 +46,27 @@ export default function WelcomePage() {
 
   return (
     <>
-      <div className="min-h-screen bg-white font-sans">
+      <div className="bg-white font-sans">
         {/* ═══ ATTENTION — Hero ═══ */}
-        <section className="relative min-h-screen flex items-center bg-gradient-to-br from-gray-900 via-gray-800 to-brand-900 overflow-hidden">
+        <section className="relative min-h-screen flex items-center bg-gray-900 overflow-hidden">
           <div className="absolute inset-0">
-            <img src="/images/hero-factory.webp" alt="" className="w-full h-full object-cover opacity-20" />
-            <div className="absolute inset-0 bg-gradient-to-b from-gray-900/60 via-gray-900/40 to-gray-900/90" />
+            <img
+              src="/images/hero-pcba-fallback.webp"
+              alt=""
+              className="w-full h-full object-cover opacity-25"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-gray-900/70 via-gray-900/50 to-gray-900/95" />
           </div>
 
           <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
-            {/* Trust badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur border border-white/20 rounded-full text-white/90 text-sm mb-8 animate-[fadeIn_1s_ease-out]">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur border border-white/20 rounded-full text-white/90 text-sm mb-8">
               <svg className="w-4 h-4 text-green-400" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" />
               </svg>
               Trusted by 150,000+ Engineers Worldwide
             </div>
 
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-white font-heading leading-tight tracking-tight">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-white leading-tight tracking-tight">
               Your PCB & PCBA<br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-orange-400">
                 Manufacturing Partner
@@ -83,18 +95,16 @@ export default function WelcomePage() {
               </button>
             </div>
 
-            {/* Stats row */}
             <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
               {stats.map((s) => (
                 <div key={s.label} className="text-center">
-                  <div className="text-2xl md:text-3xl font-bold text-white font-heading">{s.value}</div>
+                  <div className="text-2xl md:text-3xl font-bold text-white">{s.value}</div>
                   <div className="text-xs md:text-sm text-gray-400 mt-1">{s.label}</div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Scroll hint */}
           <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
             <svg className="w-6 h-6 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
@@ -102,11 +112,11 @@ export default function WelcomePage() {
           </div>
         </section>
 
-        {/* ═══ INTEREST — Trust & Capabilities ═══ */}
+        {/* ═══ INTEREST — Capabilities ═══ */}
         <section className="py-20 md:py-28 bg-white">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 font-heading">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
                 Why 150,000+ Engineers Choose HUAXING
               </h2>
               <p className="mt-4 text-lg text-gray-500 max-w-2xl mx-auto">
@@ -122,7 +132,7 @@ export default function WelcomePage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={s.icon} />
                     </svg>
                   </div>
-                  <h3 className="font-bold text-gray-900 font-heading">{s.title}</h3>
+                  <h3 className="font-bold text-gray-900">{s.title}</h3>
                   <p className="mt-2 text-sm text-gray-500 leading-relaxed">{s.desc}</p>
                   <button
                     onClick={() => setShowInquiry(true)}
@@ -134,7 +144,6 @@ export default function WelcomePage() {
               ))}
             </div>
 
-            {/* Certifications */}
             <div className="mt-16 flex flex-wrap justify-center gap-8">
               {['ISO9001:2015', 'UL Certified', 'RoHS', 'REACH', 'IPC-A-610', 'IATF 16949'].map((cert) => (
                 <div key={cert} className="flex items-center gap-2 text-sm text-gray-500">
@@ -149,12 +158,11 @@ export default function WelcomePage() {
         </section>
 
         {/* ═══ DESIRE — Social Proof + Advantages ═══ */}
-        {/* Advantages */}
         <section className="py-20 md:py-28 bg-gray-50">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div>
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 font-heading leading-tight">
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">
                   Save 30–50% Without<br />
                   Sacrificing Quality
                 </h2>
@@ -178,7 +186,7 @@ export default function WelcomePage() {
 
                 <button
                   onClick={() => setShowInquiry(true)}
-                  className="mt-8 btn-primary text-base py-3.5 px-8 cursor-pointer"
+                  className="mt-8 inline-flex items-center gap-2 px-8 py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl transition-all shadow-lg shadow-brand-500/25 hover:shadow-xl cursor-pointer"
                 >
                   Start Your Project
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -187,10 +195,9 @@ export default function WelcomePage() {
                 </button>
               </div>
 
-              {/* Visual — factory image */}
               <div className="relative">
                 <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
-                  <img src="/images/factory-smt.webp" alt="HUAXING SMT production line" className="w-full h-full object-cover" />
+                  <img src="/images/team-factory.webp" alt="HUAXING factory team" className="w-full h-full object-cover" />
                 </div>
                 <div className="absolute -bottom-6 -left-6 bg-white rounded-2xl shadow-xl border border-gray-100 p-4">
                   <div className="flex items-center gap-3">
@@ -214,7 +221,7 @@ export default function WelcomePage() {
         <section className="py-20 md:py-28 bg-white">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 font-heading">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
                 Trusted by Industry Leaders
               </h2>
               <p className="mt-4 text-lg text-gray-500">
@@ -225,10 +232,8 @@ export default function WelcomePage() {
             <div className="mt-14 grid md:grid-cols-3 gap-8">
               {testimonials.map((t, i) => (
                 <div key={i} className="relative p-8 rounded-2xl bg-gray-50 border border-gray-100 hover:shadow-lg transition-all">
-                  <div className="absolute -top-4 left-8 w-8 h-8 rounded-full bg-brand-600 text-white flex items-center justify-center">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={t.icon} />
-                    </svg>
+                  <div className="absolute -top-4 left-8 w-8 h-8 rounded-full bg-brand-600 text-white flex items-center justify-center text-sm font-bold">
+                    &ldquo;
                   </div>
                   <p className="mt-4 text-gray-600 leading-relaxed italic">&ldquo;{t.quote}&rdquo;</p>
                   <p className="mt-4 text-sm font-semibold text-brand-600">{t.company}</p>
@@ -236,10 +241,9 @@ export default function WelcomePage() {
               ))}
             </div>
 
-            {/* Partner logos strip */}
             <div className="mt-16 grid grid-cols-3 md:grid-cols-6 gap-8 items-center opacity-40 grayscale">
-              {['Tesla', 'Avnet', 'Microchip', 'Tyco', 'Harley-Davidson', 'Hexagon'].map((p) => (
-                <img key={p} src={`/images/partner-${p.toLowerCase()}.webp`} alt={p} className="h-8 mx-auto object-contain" />
+              {partners.map((p) => (
+                <img key={p.name} src={`/images/${p.file}`} alt={p.name} className="h-8 mx-auto object-contain" />
               ))}
             </div>
           </div>
@@ -251,7 +255,7 @@ export default function WelcomePage() {
             <img src="/images/hero-pcba-concept.webp" alt="" className="w-full h-full object-cover opacity-10" />
           </div>
           <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl md:text-5xl font-bold text-white font-heading leading-tight">
+            <h2 className="text-3xl md:text-5xl font-bold text-white leading-tight">
               Ready to Cut Your PCBA Costs?
             </h2>
             <p className="mt-6 text-lg text-gray-300 max-w-xl mx-auto leading-relaxed">
