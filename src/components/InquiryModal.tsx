@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, FormEvent } from 'react';
 
 // ── Floating label input field ──
 function FloatingField({
@@ -61,9 +61,26 @@ function FloatingField({
   );
 }
 
+// ── Spinner ──
+function Spinner() {
+  return (
+    <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
+      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+      <path
+        className="opacity-75"
+        fill="currentColor"
+        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+      />
+    </svg>
+  );
+}
+
 // ── Main Modal ──
 export default function InquiryModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
-  const FORM_ENDPOINT = 'https://formsubmit.co/926d2b4f4b2b452b841fba2f8d1af724';
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -71,9 +88,35 @@ export default function InquiryModal({ isOpen, onClose }: { isOpen: boolean; onC
     };
     if (isOpen) {
       window.addEventListener('keydown', handleEsc);
+      // Reset state when reopening
+      setSubmitted(false);
+      setError('');
     }
     return () => window.removeEventListener('keydown', handleEsc);
   }, [isOpen, onClose]);
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setSubmitting(true);
+    setError('');
+    try {
+      const form = formRef.current;
+      if (!form) return;
+      const fd = new FormData(form);
+      const res = await fetch('/api/contact', { method: 'POST', body: fd });
+      if (res.ok) {
+        setSubmitted(true);
+        form.reset();
+      } else {
+        const data = await res.json().catch(() => ({}));
+        setError((data as { error?: string })?.error || 'Failed to send. Please email us directly at info@huaxingpcba.com.');
+      }
+    } catch {
+      setError('Network error. Please email us directly at info@huaxingpcba.com.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   if (!isOpen) return null;
 
@@ -125,68 +168,84 @@ export default function InquiryModal({ isOpen, onClose }: { isOpen: boolean; onC
             <p className="text-sm text-gray-400 mt-1.5">We typically respond within 24 hours</p>
           </div>
 
-          {/* Form — submits directly to FormSubmit for built-in honeypot anti-spam */}
-          <form
-            action={FORM_ENDPOINT}
-            method="POST"
-            encType="multipart/form-data"
-            className="space-y-5"
-          >
-            {/* ── FormSubmit configuration ── */}
-            <input type="hidden" name="_next" value="https://huaxingpcba.com/thank-you/" />
-            <input type="hidden" name="_subject" value="HUAXING PCBA — New Inquiry" />
-            <input type="hidden" name="_captcha" value="true" />
-            <input type="hidden" name="_template" value="table" />
-            <input type="hidden" name="_autoresponse" value="Thank you for contacting HUAXING PCBA. We have received your inquiry and will respond within 24 hours with a detailed quote and free DFM analysis." />
-
-            {/* Honey pot — invisible to humans, traps bots (FormSubmit's built-in anti-spam) */}
-            <input
-              type="text"
-              name="_honey"
-              tabIndex={-1}
-              autoComplete="off"
-              className="absolute -left-[9999px] opacity-0 h-0 w-0"
-            />
-
-            {/* ── Row: Name + Email ── */}
-            <div className="grid sm:grid-cols-2 gap-4">
-              <FloatingField name="name" label="Full Name" required />
-              <FloatingField name="email" type="email" label="Email Address" required />
+          {/* Form */}
+          {submitted ? (
+            <div className="p-6 bg-green-50 border border-green-200 rounded-xl text-center">
+              <div className="w-16 h-16 rounded-full bg-green-100 text-green-600 flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <p className="text-green-700 font-medium text-lg">Thank You!</p>
+              <p className="text-green-600 text-sm mt-1">We&apos;ll respond within 24 hours with a detailed quote.</p>
             </div>
-
-            {/* ── Row: Company + Phone ── */}
-            <div className="grid sm:grid-cols-2 gap-4">
-              <FloatingField name="company" label="Company" />
-              <FloatingField name="phone" type="tel" label="Phone" />
-            </div>
-
-            {/* ── Message ── */}
-            <FloatingField name="message" label="Message" required rows={4} />
-
-            {/* ── File attachment ── */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                Attachment <span className="text-gray-400 font-normal">(Gerber, BOM, CAD files)</span>
-              </label>
-              <input
-                type="file"
-                name="attachment"
-                className="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-medium file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100 file:cursor-pointer file:transition-colors duration-200 cursor-pointer"
-              />
-            </div>
-
-            {/* ── Submit ── */}
-            <button
-              type="submit"
-              className="w-full py-3.5 bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-brand-500/25 hover:shadow-xl hover:shadow-brand-500/30 active:scale-[0.98] cursor-pointer"
+          ) : (
+            <form
+              ref={formRef}
+              onSubmit={handleSubmit}
+              className="space-y-5"
             >
-              Submit Inquiry
-            </button>
+              {/* Honey pot — invisible to humans, traps bots */}
+              <input
+                type="text"
+                name="_honeypot"
+                tabIndex={-1}
+                autoComplete="off"
+                className="absolute -left-[9999px] opacity-0 h-0 w-0"
+              />
 
-            <p className="text-xs text-gray-400 text-center">
-              Your information is safe with us. We&apos;ll respond within 24 hours.
-            </p>
-          </form>
+              {/* ── Row: Name + Email ── */}
+              <div className="grid sm:grid-cols-2 gap-4">
+                <FloatingField name="name" label="Full Name" required />
+                <FloatingField name="email" type="email" label="Email Address" required />
+              </div>
+
+              {/* ── Row: Company + Phone ── */}
+              <div className="grid sm:grid-cols-2 gap-4">
+                <FloatingField name="company" label="Company" />
+                <FloatingField name="phone" type="tel" label="Phone" />
+              </div>
+
+              {/* ── Message ── */}
+              <FloatingField name="message" label="Message" required rows={4} />
+
+              {/* ── File attachment ── */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                  Attachment <span className="text-gray-400 font-normal">(Gerber, BOM, CAD files)</span>
+                </label>
+                <input
+                  type="file"
+                  name="attachment"
+                  className="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-medium file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100 file:cursor-pointer file:transition-colors duration-200 cursor-pointer"
+                />
+              </div>
+
+              {/* ── Submit ── */}
+              <button
+                type="submit"
+                disabled={submitting}
+                className="w-full py-3.5 bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-brand-500/25 hover:shadow-xl hover:shadow-brand-500/30 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer"
+              >
+                {submitting ? (
+                  <>
+                    <Spinner />
+                    <span>Sending...</span>
+                  </>
+                ) : (
+                  'Submit Inquiry'
+                )}
+              </button>
+
+              {error && (
+                <p className="text-sm text-red-600 text-center bg-red-50 p-3 rounded-lg">{error}</p>
+              )}
+
+              <p className="text-xs text-gray-400 text-center">
+                Your information is safe with us. We&apos;ll respond within 24 hours.
+              </p>
+            </form>
+          )}
         </div>
       </div>
     </div>

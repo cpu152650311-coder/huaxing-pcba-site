@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import InquiryModal from '@/components/InquiryModal';
 
-const FORM_ENDPOINT = 'https://formsubmit.co/926d2b4f4b2b452b841fba2f8d1af724';
+const FORM_ENDPOINT = '/api/contact';
 
 const companyInfo = {
   address: 'Building A, Huaxing Industrial Park, Fuyong Street, Bao\'an District, Shenzhen, Guangdong 518103, China',
@@ -25,8 +25,10 @@ const acceptedFiles = [
 
 export default function ContactPage() {
   const [files, setFiles] = useState<File[]>([]);
+  const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [showInquiry, setShowInquiry] = useState(false);
+  const [formError, setFormError] = useState('');
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -34,9 +36,27 @@ export default function ContactPage() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    // Track submission for UI state; form submits to FormSubmit natively
-    setSubmitted(true);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitting(true);
+    setFormError('');
+    const form = e.target as HTMLFormElement;
+    const fd = new FormData(form);
+    try {
+      const res = await fetch(FORM_ENDPOINT, { method: 'POST', body: fd });
+      if (res.ok) {
+        setSubmitted(true);
+        form.reset();
+        setFiles([]);
+      } else {
+        const data = await res.json().catch(() => ({}));
+        setFormError((data as { error?: string })?.error || 'Failed to send. Please email us directly.');
+      }
+    } catch {
+      setFormError('Network error. Please email us directly at info@huaxingpcba.com.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -90,23 +110,13 @@ export default function ContactPage() {
                 </div>
               ) : (
                 <form
-                  action={FORM_ENDPOINT}
-                  method="POST"
-                  encType="multipart/form-data"
                   onSubmit={handleSubmit}
                   className="space-y-6"
                 >
-                  {/* ── FormSubmit configuration ── */}
-                  <input type="hidden" name="_next" value="https://huaxingpcba.com/thank-you/" />
-                  <input type="hidden" name="_subject" value="HUAXING PCBA — New Inquiry from Website" />
-                  <input type="hidden" name="_captcha" value="true" />
-                  <input type="hidden" name="_template" value="table" />
-                  <input type="hidden" name="_autoresponse" value="Thank you for contacting HUAXING PCBA. We have received your inquiry and will respond within 24 hours." />
-
                   {/* Honey pot — invisible to humans, traps bots */}
                   <input
                     type="text"
-                    name="_honey"
+                    name="_honeypot"
                     tabIndex={-1}
                     autoComplete="off"
                     className="absolute -left-[9999px] opacity-0 h-0 w-0"
@@ -231,13 +241,22 @@ export default function ContactPage() {
 
                   <button
                     type="submit"
-                    className="w-full py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-brand-500/25 flex items-center justify-center gap-2"
+                    disabled={submitting}
+                    className="w-full py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-brand-500/25 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                   >
-                    Submit Inquiry
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
+                    {submitting ? 'Sending...' : (
+                      <>
+                        Submit Inquiry
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                      </>
+                    )}
                   </button>
+
+                  {formError && (
+                    <p className="text-sm text-red-600 text-center bg-red-50 p-3 rounded-lg">{formError}</p>
+                  )}
 
                   <p className="text-xs text-gray-400 text-center">
                     Your information is kept confidential and will never be shared with third parties.
