@@ -50,11 +50,11 @@ export default function WelcomePage() {
         {/* ═══ ATTENTION — Hero ═══ */}
         <section className="relative min-h-screen flex items-center bg-gray-900 overflow-hidden">
           <div className="absolute inset-0">
-            <img
-              src="/images/hero-pcba-fallback.webp"
-              alt=""
-              className="w-full h-full object-cover opacity-25"
-            />
+              <img
+                src="/images/hero-pcba-concept.webp"
+                alt=""
+                className="w-full h-full object-cover opacity-25"
+              />
             <div className="absolute inset-0 bg-gradient-to-b from-gray-900/70 via-gray-900/50 to-gray-900/95" />
           </div>
 

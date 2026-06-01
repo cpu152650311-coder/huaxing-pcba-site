@@ -7,9 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function WelcomeLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en">
-      <body className="min-h-screen bg-white">{children}</body>
-    </html>
-  );
+  return <>{children}</>;
 }
