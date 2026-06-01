@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import InquiryModal from '@/components/InquiryModal';
 
-const FORM_ENDPOINT = '/api/contact.php';
+const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY || 'YOUR_KEY_HERE';
+const FORM_ENDPOINT = 'https://api.web3forms.com/submit';
 
 const companyInfo = {
   address: 'Building A, Huaxing Industrial Park, Fuyong Street, Bao\'an District, Shenzhen, Guangdong 518103, China',
@@ -42,18 +43,19 @@ export default function ContactPage() {
     setFormError('');
     const form = e.target as HTMLFormElement;
     const fd = new FormData(form);
+    fd.append('access_key', WEB3FORMS_KEY);
     try {
       const res = await fetch(FORM_ENDPOINT, { method: 'POST', body: fd });
-      if (res.ok) {
+      const data = await res.json();
+      if (data.success) {
         setSubmitted(true);
         form.reset();
         setFiles([]);
       } else {
-        const data = await res.json().catch(() => ({}));
-        setFormError((data as { error?: string })?.error || 'Failed to send. Please email us directly.');
+        setFormError(data.message || 'Failed to send. Please email us directly.');
       }
     } catch {
-      setFormError('Network error. Please email us directly at info@huaxingpcba.com.');
+      setFormError('Network error. Please email us at sales@huaxingpcba.com.');
     } finally {
       setSubmitting(false);
     }
@@ -113,14 +115,8 @@ export default function ContactPage() {
                   onSubmit={handleSubmit}
                   className="space-y-6"
                 >
-                  {/* Honey pot — invisible to humans, traps bots */}
-                  <input
-                    type="text"
-                    name="_honeypot"
-                    tabIndex={-1}
-                    autoComplete="off"
-                    className="absolute -left-[9999px] opacity-0 h-0 w-0"
-                  />
+                  {/* Web3Forms anti-spam — bots auto-check this hidden checkbox */}
+                  <input type="checkbox" name="botcheck" tabIndex={-1} autoComplete="off" className="absolute -left-[9999px]" />
 
                   <div className="grid sm:grid-cols-2 gap-6">
                     <div>
