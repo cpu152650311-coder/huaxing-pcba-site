@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /thank-you
+Disallow: /welcome
+Disallow: /_next/
+Disallow: /api/
+
+Sitemap: https://huaxingpcba.com/sitemap.xml

@@ -6,8 +6,8 @@ import InquiryModal from './InquiryModal';
 
 const navLinks = [
   { href: '/', label: 'Home' },
-  { href: '/products/pcb-manufacturing', label: 'PCB Manufacturing' },
-  { href: '/products/pcb-assembly', label: 'PCB Assembly' },
+  { href: '/pcb-manufacturing', label: 'PCB Manufacturing' },
+  { href: '/pcb-assembly', label: 'PCB Assembly' },
   { href: '/capabilities', label: 'Capabilities' },
   { href: '/quality', label: 'Quality' },
   { href: '/about', label: 'About' },

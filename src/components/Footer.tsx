@@ -7,8 +7,8 @@ import InquiryModal from '@/components/InquiryModal';
 
 const footerLinks = {
   Services: [
-    { href: '/products/pcb-manufacturing', label: 'PCB Manufacturing' },
-    { href: '/products/pcb-assembly', label: 'PCB Assembly' },
+    { href: '/pcb-manufacturing', label: 'PCB Manufacturing' },
+    { href: '/pcb-assembly', label: 'PCB Assembly' },
     { href: '/capabilities', label: 'BOM Procurement' },
     { href: '/capabilities', label: 'Capabilities' },
   ],
