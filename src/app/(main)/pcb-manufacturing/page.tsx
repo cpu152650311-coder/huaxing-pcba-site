@@ -434,7 +434,7 @@ export default function PCBMfgPage() {
               </svg>
             </button>
             <Link
-              href="/products/pcb-assembly"
+              href="/pcb-assembly"
               className="inline-flex items-center gap-2 border-2 border-white/40 text-white hover:bg-white/10 font-semibold py-3 px-8 rounded-lg transition-all duration-200"
             >
               Explore PCB Assembly
