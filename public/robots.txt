@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Prevent indexing of Next.js static chunks (JS/CSS bundles)
+Disallow: /_next/static/
+
+# Prevent indexing of API endpoints
+Disallow: /api/
+
+# Prevent indexing of utility pages
+Disallow: /thank-you
+Disallow: /welcome
+
+Sitemap: https://huaxingpcba.com/sitemap.xml
